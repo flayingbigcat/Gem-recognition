@@ -41,37 +41,6 @@
                         <h2>Product Category</h2>
                     </div>
                 </div>
-<!--                <div class="col-md-6">-->
-<!--                    <div class="category-box">-->
-<!--                        <router-link to="#">-->
-<!--                            <img src="../assets/F1.jpg" alt="" />-->
-<!--                            <div class="content">-->
-<!--                                <h3>Formula One</h3>-->
-<!--                                <p>Super Faster and Super Power</p>-->
-<!--                            </div>-->
-<!--                        </router-link>-->
-<!--                    </div>-->
-<!--                    <div class="category-box">-->
-<!--                        <router-link to="#">-->
-<!--                            <img src="../assets/Orange_Lamborghini_Aventador_2020_Supercar_HD_Desktop_2560x1440.jpg" alt="" />-->
-<!--                            <div class="content">-->
-<!--                                <h3>Lamborghini Aventador</h3>-->
-<!--                                <p>Get Wide Range Selection</p>-->
-<!--                            </div>-->
-<!--                        </router-link>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col-md-6 d-flex align-items-center">-->
-<!--                    <div class="category-box category-box-2">-->
-<!--                        <router-link to="#">-->
-<!--                            <img src="../assets/R.jpg" alt="" />-->
-<!--                            <div class="content">-->
-<!--                                <h3>Lamborghini_Aventador</h3>-->
-<!--                                <p>Special Design Comes First</p>-->
-<!--                            </div>-->
-<!--                        </router-link>-->
-<!--                    </div>-->
-<!--                </div>-->
               <div class="col-md-6 ">
                 <div class="category-box ">
                   <router-link to="#">

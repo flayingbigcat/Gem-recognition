@@ -51,7 +51,7 @@ public class FileController {
 
     @GetMapping("/images")
     public ResponseVo<List<String>> images() {
-        String directoryPath = "D:\\yxz\\yuzai_web\\WebGIS-Based-Second-Hand-Car-Trading-Website\\demo\\src\\CrouselImage";
+        String directoryPath = "D:\\yxz\\yuzai_web\\Gem-recognition\\demo\\src\\CrouselImage";
         try {
             List<String> imageBase64List = getAllImagesAsBase64(directoryPath);
             return ResponseVo.success(imageBase64List);
@@ -63,7 +63,7 @@ public class FileController {
 
     @GetMapping("/Product_images")
     public ResponseVo<List<String>> product_images() {
-        String directoryPath = "D:\\yxz\\yuzai_web\\WebGIS-Based-Second-Hand-Car-Trading-Website\\demo\\src\\Productimages";
+        String directoryPath = "D:\\yxz\\yuzai_web\\Gem-recognition\\demo\\src\\Productimages";
         try {
             List<String> imageBase64List = getAllImagesAsBase64(directoryPath);
             return ResponseVo.success(imageBase64List);
