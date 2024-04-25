@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.userMapper">
+    <insert id="addUser" >
+        insert into users1 (user_name, user_password,user_email)
+        values (#{user_name},#{user_password},#{user_email})
+    </insert>
+
+    <insert id="addUserCheckIsExist">
+ insert into users1 (user_name, user_email,user_password)
+        values (#{user_name},#{user_email},#{user_password})
+
+ </insert>
+
+    <select id="selectAll" resultType="com.example.demo.pojo.User">
+        select * from users1
+    </select>
+    <select id="selectUserByName" resultType="com.example.demo.pojo.User">
+        select * from users1 where user_email=#{user_email}
+    </select>
+
+    <select id="userLogin" resultType="com.example.demo.pojo.User">
+        select * from users1 where user_email=#{user_email} and user_password=#{user_password}
+ </select>
+    <select id="getUserNameByEmail" resultType="com.example.demo.pojo.User">
+        SELECT user_name FROM users1 WHERE user_email=#{user_email}
+    </select>
+    <update id="reviseUser">
+        update users1
+        set user_name=#{user_name},
+        user_sex=#{user_sex},
+        user_address=#{user_address},
+        user_phone=#{user_phone},
+        user_description=#{user_description},
+        user_imageSrc=#{user_imageSrc}
+        where user_id=#{user_id}
+    </update>
+
+    <select id="selectUser" resultType="com.example.demo.pojo.User">
+        select * from users1 where user_id=#{user_id}
+    </select>
+    <select id="selectId" resultType="com.example.demo.pojo.User">
+        select * from users1 where user_email=#{user_email}
+    </select>
+</mapper>

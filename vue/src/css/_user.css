@@ -1,0 +1,18 @@
+.dashboard-wrapper .user-img {
+    width: 120px;
+    border-radius: 100px;
+}
+.widget-latest-post .media .media-object {
+    width: 150px;
+    height: auto;
+}
+
+.widget-latest-post .media .media-heading a {
+    color: black; /* 注意：这里的 $black 应该是在Sass中定义的变量，你需要用实际的颜色值替换它，比如 #000000 */
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.widget-latest-post .media p {
+    font-size: 12px;
+}
