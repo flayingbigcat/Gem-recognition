@@ -2,9 +2,9 @@
     <div class="product">
         <div class="container">
             <div class="row">
-                <div class="col-md-4" v-for="product in displayedProducts" :key="product.product_id">
+                <div class="col-md-3" v-for="product in displayedProducts" :key="product.product_id">
                     <div class="product-item">
-                        <div class="card text-center">
+                        <div class="card text-center ">
                             <!-- 使用 require 导入图片 -->
                             <img :src="require(`../assets/${product.product_imageSrc}`)" class="card-img-top" alt="">
                             <div class="card-body ">
@@ -48,6 +48,7 @@ export default {
     name: 'productList',
     data() {
         return {
+          Gem_pictures:[],
             products: [
                 // {
                 //     product_id:'1',

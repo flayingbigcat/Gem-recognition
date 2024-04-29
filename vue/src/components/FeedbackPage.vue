@@ -2,15 +2,12 @@
   <header-bar></header-bar>
   <div  style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
     <input type="file" @change="handleFileUpload">
-    <img :src="originalImageUrl" v-if="originalImageUrl" alt="Uploaded Image">
-    <button @click="uploadImage">上传图片</button>
-    <p>预测结果:{{prediction}}</p>
+    <div class=" justify-content-center">
+      <img :src="originalImageUrl" v-if="originalImageUrl" alt="Uploaded Image" class="w-25">
+    </div>
 
-<!--    <div >-->
-<!--      <div >-->
-<!--        <img :src="'data:image;base64,'+image">-->
-<!--      </div>-->
-<!--    </div>-->
+    <button @click="uploadImage">上传图片</button>
+    <p>识别结果:{{prediction}}</p>
   </div>
   <footer-bar></footer-bar>
 </template>
@@ -54,17 +51,6 @@ export default {
             console.error('Error uploading image: ', error);
           });
     },
-    // gain(){
-    //   axios.get('http://localhost:8081/file/images').then((res)=>{
-    //     console.log(res)
-    //     this.image = res.data.data[0];
-    //     // this.$message.success('图片获取成功');
-    //     console.log('图片获取成功');
-    //   }).catch(()=>{
-    //     // this.$message.error('图片获取失败');
-    //     console.log('图片获取失败');
-    //   })
-    // },
   }
 };
 </script>
