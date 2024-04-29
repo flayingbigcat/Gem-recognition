@@ -56,6 +56,7 @@ export default {
           })
           .finally(() => {
             this.closeFullScreen2(); // 接收到数据后关闭加载动画
+            this.uploading = false;
           });
     },
     openFullScreen2() {
