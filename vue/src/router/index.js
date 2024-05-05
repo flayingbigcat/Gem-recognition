@@ -36,6 +36,7 @@ import { createRouter,createWebHistory} from 'vue-router'
 import login from "../view/loginview.vue";
 import HelloWorld from '../components/Index.vue'
 import UserPage from  '../components/UserPage.vue'
+import StyleConversion from "@/components/StyleConversion.vue";
 
 const routes = [
     {
@@ -55,6 +56,7 @@ const routes = [
         { path: '/OrderPage', component: OrderPage},
         { path: '/ShopPage',component: ShopPage},
         { path: '/FeedbackPage', component: FeedbackPage },
+         { path: '/StyleConversion', component: StyleConversion },
     {
         path: '/UserPage', name: 'UserPage', component: UserPage
     },

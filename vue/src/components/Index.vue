@@ -16,6 +16,7 @@
           ></button>
             <div class="carousel-inner">
               <div v-for="(image, index) in images" :key="index" :class="{ 'carousel-item': true, 'active': index === 0 }" data-bs-interval="3000">
+<!--                解码后端发送的64位图片编码-->
                 <img :src="'data:image;base64,' + image" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-block">
                   <h5>{{ '第 ' + (index + 1) + ' 张图片' }}</h5>

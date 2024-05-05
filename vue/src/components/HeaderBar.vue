@@ -68,6 +68,9 @@ export default {
                         <router-link class="nav-link active" to="/FeedbackPage">Feedback</router-link>
                     </li>
                     <li class="nav-item">
+                        <router-link class="nav-link active" to="/StyleConversion">风格转换</router-link>
+                    </li>
+                    <li class="nav-item">
                         <router-link class="nav-link active" to="/">About</router-link>
                     </li>
                 </ul>
