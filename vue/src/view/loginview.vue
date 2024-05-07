@@ -66,16 +66,7 @@ export default {
                     localStorage.setItem('user_address', response.data.user.user_address);
                     localStorage.setItem('user_description', response.data.user.user_description);
                     localStorage.setItem('user_imageSrc', response.data.user.user_imageSrc);
-
                     console.log('----------------')
-
-                    // console.log( localStorage.getItem('user_name'))
-                    // console.log( localStorage.getItem('user_id'))
-                    // console.log( localStorage.getItem('user_sex'))
-                    // console.log( localStorage.getItem('user_phone'))
-                    // console.log( localStorage.getItem('user_address'))
-                    // console.log( localStorage.getItem('user_description'))
-                    // console.log( localStorage.getItem('user_imageSrc'))
                     router.push('/index');
                 })
                 .catch(error => {

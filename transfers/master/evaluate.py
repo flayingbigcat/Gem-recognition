@@ -274,11 +274,26 @@ def upload():
     # print(request.files)
 
     file = request.files['image']
-    weight_file = request.files['weight_file']
+    weight_file = request.form.get('selectedOption')
+
+    global checkpoint_dir
+    if weight_file=='Option1':
+        checkpoint_dir = '../checkpoints/la_muse.ckpt'
+    if weight_file=='Option2':
+        checkpoint_dir = '../checkpoints/rain_princess.ckpt'
+    if weight_file=='Option3':
+        checkpoint_dir = '../checkpoints/scream.ckpt'
+    if weight_file=='Option4':
+        checkpoint_dir = '../checkpoints/udnie.ckpt'
+    if weight_file=='Option5':
+        checkpoint_dir = '../checkpoints/wave.ckpt'
+    if weight_file=='Option6':
+        checkpoint_dir = '../checkpoints/wreck.ckpt'
+
 
     file.save('../input_img/' + file.filename)
-    global checkpoint_dir
-    checkpoint_dir = '../checkpoints/' + weight_file.filename
+    # global checkpoint_dir
+    # checkpoint_dir = '../checkpoints/' + weight_file.filename
 
     global in_dir
     in_dir = '../input_img/' + file.filename
@@ -299,7 +314,7 @@ def upload():
         encoded_string = base64.b64encode(img_file.read()).decode('utf-8')
 
     # 返回给前端
-    return jsonify({'image': encoded_string, 'prediction': '你的预测结果'})
+    return jsonify({'image': encoded_string, 'prediction': '你的转化结果'})
 
 
 if __name__ == '__main__':

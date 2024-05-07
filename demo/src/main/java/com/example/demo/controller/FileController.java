@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sun.misc.BASE64Encoder;
+//import sun.misc.BASE64Encoder;
 import com.example.demo.pojo.ResponseVo;
 
 import java.io.ByteArrayOutputStream;

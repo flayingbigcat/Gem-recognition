@@ -70,21 +70,16 @@ CORS(app)
 def predict():
     # 从请求中获取图像文件
     img_file = request.files['image']
-
     # 加载 YOLO 模型
     model = YOLO('./best.pt')
-
     # 使用 PIL（Python Imaging Library）打开图像文件
     image = Image.open(img_file)
-
     # 如果图像不是 RGB 格式，则转换为 RGB 格式
     image = image.convert('RGB')
-
     # 对图像进行目标检测
     results = model(image)
     # 去模型炼出的金丹
     class_name = results[0].names[results[0].probs.top1]
-
     return class_name
 # # ?调试输出检测结果的类型和内容
 # print("Results type:", type(results))

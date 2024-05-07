@@ -3,7 +3,7 @@
   <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
     <input type="file" @change="handleFileUpload">
     <div class="justify-content-center">
-      <img :src="originalImageUrl" v-if="originalImageUrl" alt="上传的图片" class="w-25">
+      <img :src="originalImageUrl" v-if="originalImageUrl" alt="上传的图片" >
     </div>
 
     <el-button @click="uploadImage" :disabled="uploading" type="primary">上传图片</el-button>
