@@ -9,6 +9,7 @@ from utils import save_img, get_img, exists, list_files
 from argparse import ArgumentParser
 from collections import defaultdict
 
+
 BATCH_SIZE = 4
 DEVICE = '/gpu:0'
 checkpoint_dir= '../checkpoints/scream.ckpt'

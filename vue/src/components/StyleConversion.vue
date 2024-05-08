@@ -15,20 +15,27 @@
 
 
   <div  style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-    <input type="file" @change="handleFileUpload">
+     <input type="file" @change="handleFileUpload" style="display: none;">
+     <button type="button" class="btn btn-primary" onclick="document.querySelector('input[type=file]').click()">
+        <span class="justify-content-center" aria-hidden="true">选择文件</span>
+     </button>
 
-<div id="app" class="centered-container">
+
+
+   <div id="app" class="centered-container">
     <select v-model="selectedOption" @change="handleSelectChange">
+      <option disabled value="">选择转换风格</option>
       <option v-for="option in options" :key="option.value" :value="option.value">
         {{ option.label }}
       </option>
     </select>
-<!--    <p>当前选中的是: {{ selectedOption }}</p>-->
+    <p v-if="selectedOption">当前选中的是: {{ selectedOption }}</p>
   </div>
 
 <!--    <input type="file" @change="handleWeightFileUpload">-->
     <img :src="originalImageUrl" v-if="originalImageUrl" alt="Uploaded Image">
-    <button @click="PassInThePicture">上传图片</button>
+    <button type="button" class="btn btn-primary" @click="PassInThePicture">上传图片</button>
+
     <!-- Loading 组件，根据 uploading 变量决定是否显示 -->
     <el-loading v-if="uploading" text="识别中..." :background="'rgba(0, 0, 0, 0.7)'"></el-loading>
     <p>结果:{{prediction}}</p>
@@ -77,12 +84,12 @@ export default {
       image: '',
       value: '',
       options: [
-        {value: 'Option1', label: '选项一:毕加索',filePath:'/transfers/checkpoints/la_muse.ckpt',fileId:1},
-        {value: 'Option2', label: '选项二:七彩斑斓'},
-        {value: 'Option3', label: '选项三:呐喊'},
-        {value: 'Option4', label: '选项四:暴风雨'},
-        {value: 'Option5', label: '选项五:皮卡比亚'},
-        {value: 'Option6', label: '选六:浮世绘'}
+        {value: 'Option1', label: '一:毕加索',filePath:'/transfers/checkpoints/la_muse.ckpt',fileId:1},
+        {value: 'Option2', label: '二:七彩斑斓'},
+        {value: 'Option3', label: '三:呐喊'},
+        {value: 'Option4', label: '四:暴风雨'},
+        {value: 'Option5', label: '五:皮卡比亚'},
+        {value: 'Option6', label: '六:浮世绘'}
       ],
       formData: null,
     };

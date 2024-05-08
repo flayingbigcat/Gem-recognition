@@ -1,12 +1,16 @@
 <template>
   <header-bar></header-bar>
   <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-    <input type="file" @change="handleFileUpload">
+
+    <input type="file" @change="handleFileUpload" style="display: none;">
+    <button type="button" class="btn btn-primary" onclick="document.querySelector('input[type=file]').click()">
+    <span class="justify-content-center" aria-hidden="true"></span>
+    选择文件
+    </button>
     <div class="justify-content-center">
       <img :src="originalImageUrl" v-if="originalImageUrl" alt="上传的图片" >
     </div>
-
-    <el-button @click="uploadImage" :disabled="uploading" type="primary">上传图片</el-button>
+    <button class="btn btn-primary" @click="uploadImage" :disabled="uploading" type="primary">上传图片</button>
     <!-- Loading 组件，根据 uploading 变量决定是否显示 -->
     <el-loading v-if="uploading" text="识别中..." :background="'rgba(0, 0, 0, 0.7)'"></el-loading>
 

@@ -11,6 +11,7 @@ import EditInfo from '../components/EditInfo.vue'
 import ProductPump from '../components/ProductPump.vue'
 import PumpSingle from "@/components/PumpSingle.vue";
 import ProductSingle from "@/components/ProductSingle.vue";
+import HistoryRecording from "@/components/HistoryRecording.vue";
 //
 // // 创建路由实例
 // const router = createRouter({
@@ -56,7 +57,8 @@ const routes = [
         { path: '/OrderPage', component: OrderPage},
         { path: '/ShopPage',component: ShopPage},
         { path: '/FeedbackPage', component: FeedbackPage },
-         { path: '/StyleConversion', component: StyleConversion },
+        { path: '/StyleConversion', component: StyleConversion },
+        { path:'/HistoryRecording', component: HistoryRecording },
     {
         path: '/UserPage', name: 'UserPage', component: UserPage
     },
