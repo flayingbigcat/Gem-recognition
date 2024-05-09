@@ -19,18 +19,22 @@
                     <div class="single-product-slider">
                         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
-                                <div class="carousel-item active" data-bs-interval="2000">
-                                    <img v-if="product_imageSrc"
-                                         :src="require(`../assets/${product_imageSrc}`)" class="d-block w-100">
-                                </div>
-                                <div class="carousel-item" data-bs-interval="2000">
-                                    <img v-if="product_imageSrc1"
-                                         :src="require(`../assets/${product_imageSrc1}`)" class="d-block w-100">
-                                </div>
-                                <div class="carousel-item" data-bs-interval="2000">
-                                    <img v-if="product_imageSrc2"
-                                         :src="require(`../assets/${product_imageSrc2}`)" class="d-block w-100">
-                                </div>
+                              <div v-for="(Gem_img, index) in 3" :key="index" :class="{ 'carousel-item': true, 'active': index === 0 }" data-bs-interval="3000">
+                                <img :src="'data:image;base64,' + Gem_img[productId]" class="d-block w-100" alt="...">
+
+                              </div>
+<!--                                <div class="carousel-item active" data-bs-interval="2000">-->
+<!--                                    <img v-if="product_imageSrc"-->
+<!--                                         :src="require(`../assets/${product_imageSrc}`)" class="d-block w-100">-->
+<!--                                </div>-->
+<!--                                <div class="carousel-item" data-bs-interval="2000">-->
+<!--                                    <img v-if="product_imageSrc1"-->
+<!--                                         :src="require(`../assets/${product_imageSrc1}`)" class="d-block w-100">-->
+<!--                                </div>-->
+<!--                                <div class="carousel-item" data-bs-interval="2000">-->
+<!--                                    <img v-if="product_imageSrc2"-->
+<!--                                         :src="require(`../assets/${product_imageSrc2}`)" class="d-block w-100">-->
+<!--                                </div>-->
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -99,6 +103,7 @@ export default {
     props: ['productId'],
     data() {
         return {
+            Gem_img:[],
             quantity: 1, // 初始化为1
             product_imageSrc:'product_1.jpg',
             product_imageSrc1:'product_2.jpg',

@@ -73,6 +73,18 @@ public class FileController {
         }
     }
 
+    @GetMapping("/Gem_img")
+    public ResponseVo<List<String>> Gme_img() {
+        String directoryPath = "D:\\yxz\\yuzai_web\\Gem-recognition\\demo\\src\\Gem_img";
+        try {
+            List<String> imageBase64List = getAllImagesAsBase64(directoryPath);
+            return ResponseVo.success(imageBase64List);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseVo.error("Error reading image files");
+        }
+    }
+
     private List<String> getAllImagesAsBase64(String directoryPath) throws IOException {
         List<String> imageBase64List = new ArrayList<>();
         // 获取指定目录下的所有图片文件

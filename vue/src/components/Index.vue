@@ -84,6 +84,7 @@
             </div>
           <div class="row">
             <div class="col-md-4" v-for="(product, index) in products" :key="product.product_id" >
+
               <div class="product-item">
                 <div class="product-thumb">
                   <!-- 从第4张图片开始读取 -->
@@ -91,10 +92,12 @@
                        :src="'data:image;base64,' + images_product[index]" alt="product-img" />
                 </div>
               </div>
+
               <div class="product-content">
-                <h4><router-link :to="`/ProductSingle/${product.product_id}`">{{ product.product_name }}</router-link></h4>
-                <p class="price">{{ product.product_price }}</p>
+                <h4><router-link :to="`/ProductSingle/${product[0]}`">{{ product[1] }}</router-link></h4>
+                <p class="price">{{ product[2] }}</p>
               </div>
+
             </div>
           </div>
         </div>
@@ -151,12 +154,12 @@ export default {
         };
     },
     created() {
-        axios.post('http://127.0.0.1:8081/selectShop2')
+        axios.get('http://127.0.0.1:9200/get_shops?query_type=top_9')
             .then(response => {
                 // Update the products array with the data received from the backend
                 this.products = response.data;
+              console.log(this.products);
                 console.log(response.data);
-                console.log(response.data.product_imageSrc);
             })
             .catch(error => {
                 console.error('Error fetching data from the backend:', error);
@@ -169,9 +172,9 @@ export default {
     },
   methods:{
       gain(){
-        axios.get('http://localhost:8081/file/images').then((res)=>{
+        axios.get('http://127.0.0.1:9200/uploadimg/carousel').then((res)=>{
           console.log(res)
-          this.images = res.data.data;
+          this.images = res.data;
           // this.$message.success('图片获取成功');
           console.log('图片获取成功');
         }).catch(()=>{
@@ -180,9 +183,9 @@ export default {
         })
       },
     gain_product(){
-      axios.get('http://localhost:8081/file/Product_images').then((res)=>{
+      axios.get('http://127.0.0.1:9200/uploadimg/product').then((res)=>{
         console.log(res)
-        this.images_product = res.data.data;
+        this.images_product = res.data;
         // this.$message.success('图片获取成功');
         console.log('图片获取成功');
       }).catch(()=>{

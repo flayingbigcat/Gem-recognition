@@ -2,17 +2,18 @@
     <div class="product">
         <div class="container">
             <div class="row">
-                <div class="col-md-3" v-for="product in displayedProducts" :key="product.product_id">
+                <div class="col-md-3" v-for="(product , index) in displayedProducts" :key="product[0]">
                     <div class="product-item">
                         <div class="card text-center ">
                             <!-- 使用 require 导入图片 -->
-                            <img :src="require(`../assets/${product.product_imageSrc}`)" class="card-img-top" alt="">
+<!--                            <img :src="require(`../assets/${product.product_imageSrc}`)" class="card-img-top" alt="">-->
+                          <img :src="'data:image;base64,' + Gem_pictures[startIndex+index]" class="card-img-top" alt="...">
                             <div class="card-body ">
-                                <h5 class="card-title">{{ product.product_name }}</h5>
-                                <h5 class="card-text">{{product.product_price}}</h5>
-                                <p class="card-text">{{ product.product_description }}</p>
+                                <h5 class="card-title">{{ product[1] }}</h5>
+                                <h5 class="card-text">{{product[2]}}</h5>
+<!--                                <p class="card-text">{{ product.product_description }}</p>-->
                                 <div class="d-grid gap-2 d-md-flex justify-content-center">
-                                    <router-link :to="`/ProductSingle/${product.product_id}`" class="btn btn-dark me-md-2">View</router-link>
+                                    <router-link :to="`/ProductSingle/${product[0]}`" class="btn btn-dark me-md-2">View</router-link>
                                     <button class="btn btn-info" type="button" @click="addToCart(product)">put cart</button>
                                 </div>
                             </div>
@@ -58,12 +59,12 @@ export default {
                 // }
             ],
             currentPage: 1,
-            pageSize: 9, // 每页显示数量
+            pageSize: 12, // 每页显示数量
         };
     },
     created() {
         // Make an HTTP request to the backend API endpoint
-        axios.post('http://8.134.18.17:8081/selectShop')
+        axios.get('http://127.0.0.1:9200/get_shops?query_type=all')
             .then(response => {
                 // Update the products array with the data received from the backend
                 console.log(response.data);
@@ -75,18 +76,23 @@ export default {
             });
     },
     computed: {
-        // 计算属性，根据当前页码和每页显示数量计算显示的产品列表
-        displayedProducts() {
-            const startIndex = (this.currentPage - 1) * this.pageSize;
-            const endIndex = startIndex + this.pageSize;
-            return this.products.slice(startIndex, endIndex);
-        },
-        // 计算总页数
-        totalPages() {
-            return Math.ceil(this.products.length / this.pageSize);
-        },
+      // 计算索引，第一页从0开始，第二页从9开始，第三页从18开始，以此类推
+      startIndex() {
+        return (this.currentPage - 1) * this.pageSize;
+      },
+      // 计算显示的产品列表
+      displayedProducts() {
+        return this.products.slice(this.startIndex, this.startIndex + this.pageSize);
+      },
+      // 计算总页数
+      totalPages() {
+        return Math.ceil(this.products.length / this.pageSize);
+      },
     },
-    methods: {
+  mounted() {
+      this.gain_gam();
+  },
+  methods: {
         // 上一页按钮点击事件
         prevPage() {
             if (this.currentPage > 1) {
@@ -133,6 +139,18 @@ export default {
                     console.error("There was an error adding the item to the cart:", error);
                 });
         },
+      gain_gam(){
+        axios.get('http://127.0.0.1:9200/uploadimg/GEM').then((res)=>{
+          console.log(res)
+          this.Gem_pictures = res.data;
+          // this.$message.success('图片获取成功');
+          // localStorage.setItem('Gem_pictures', JSON.stringify(res.data.data));
+          console.log('图片获取成功');
+        }).catch(()=>{
+          // this.$message.error('图片获取失败');
+          console.log('图片获取失败');
+        })
+      },
     },
 };
 </script>

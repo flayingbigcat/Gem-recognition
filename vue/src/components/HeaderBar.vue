@@ -56,16 +56,16 @@ export default {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <router-link class="nav-link active" aria-current="page" to="/Index">Home</router-link>
+                        <router-link class="nav-link active" aria-current="page" to="/Index">首页</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link active" to="/ShopPage">Shop</router-link>
+                        <router-link class="nav-link active" to="/ShopPage">宝石</router-link>
                     </li>
                     <li class="nav-item">
-                      <router-link class="nav-link active" to="/ProductPump">Pump</router-link>
+                      <router-link class="nav-link active" to="/ProductPump">AI创作</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link active" to="/FeedbackPage">Feedback</router-link>
+                        <router-link class="nav-link active" to="/FeedbackPage">宝石识别</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link active" to="/">About</router-link>
