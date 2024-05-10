@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <header-bar></header-bar>
     <div>
         <el-container style="height: 700px; border: 1px solid #eee">
@@ -16,10 +16,13 @@
 
                             <el-menu-item-group>
                                 <el-menu-item index="1-1">
-                                    <router-link to="/dept">原始图片图片</router-link>
+                                    <router-link to="/dept">宝石识别记录</router-link>
                                 </el-menu-item>
                                 <el-menu-item index="1-2">
-                                    <router-link to="/emp">查询图片管理</router-link>
+                                    <router-link to="/emp">风格转移记录</router-link>
+                                </el-menu-item>
+                                <el-menu-item index="1-3">
+                                    <router-link to="/emp">珠宝设计记录</router-link>
                                 </el-menu-item>
                             </el-menu-item-group>
                         </el-submenu>
@@ -107,8 +110,13 @@ export default {
     },
     mounted() {
         //发送异步请求
-        axios.get("http://yapi.smart-xwork.cn/mock/169327/emp/list").then((result) => {
+        axios.get("http://yapi.smart-xwork.cn/mock/169327/emp/list")
+        .then((result) => {
             this.tableData = result.data.data;
+        })
+        .catch((error) => {
+            console.error("Error fetching data:", error);
+            // 在这里处理错误，比如显示错误消息给用户
         });
     }
 };

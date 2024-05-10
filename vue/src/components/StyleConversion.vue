@@ -29,7 +29,7 @@
         {{ option.label }}
       </option>
     </select>
-    <p v-if="selectedOption">当前选中的是: {{ selectedOption }}</p>
+<!--    <p v-if="selectedOption">当前选中的是: {{ selectedOption }}</p>-->
   </div>
 
 <!--    <input type="file" @change="handleWeightFileUpload">-->
@@ -38,7 +38,7 @@
 
     <!-- Loading 组件，根据 uploading 变量决定是否显示 -->
     <el-loading v-if="uploading" text="识别中..." :background="'rgba(0, 0, 0, 0.7)'"></el-loading>
-    <p>结果:{{prediction}}</p>
+    <p>转换结果:{{prediction}}</p>
     <span>{{  }}</span>
 <!--<img src='../output_img/alexandrite_18.jpg' alt="Prediction Image">-->
 <!--<img v-bind:src="'../output_img/' + predictionImagename" alt="裂开了">-->
@@ -84,7 +84,7 @@ export default {
       image: '',
       value: '',
       options: [
-        {value: 'Option1', label: '一:毕加索',filePath:'/transfers/checkpoints/la_muse.ckpt',fileId:1},
+        {value: 'Option1', label: '一:毕加索'},
         {value: 'Option2', label: '二:七彩斑斓'},
         {value: 'Option3', label: '三:呐喊'},
         {value: 'Option4', label: '四:暴风雨'},

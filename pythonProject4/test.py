@@ -80,7 +80,58 @@ def predict():
     results = model(image)
     # 去模型炼出的金丹
     class_name = results[0].names[results[0].probs.top1]
-    return class_name
+    if class_name == 'Garnet Red':
+        return '石榴石'
+    if class_name == 'Alexandrite':
+        return '变石(紫翠玉)'
+    if class_name == 'Almandine':
+        return '铁铝榴石'
+    if class_name == 'Benitoite':
+        return '蓝锥矿晶体'
+    if class_name == 'Beryl Golden':
+        return '金绿柱石'
+    if class_name == 'Carnelian':
+        return '红玛瑙'
+    if class_name == 'Cats Eye':
+        return '猫眼石'
+    if class_name == 'Danburite':
+        return '赛黄晶'
+    if class_name == 'Diamond':
+        return '钻石'
+    if class_name == 'Emerald':
+        return '翡翠'
+    if class_name == 'Fluorite':
+        return '萤石'
+    if class_name == 'Garnet Red':
+        return '红石榴石'
+    if class_name == 'Hessonite':
+        return '钙铝榴石'
+    if class_name == 'Iolite':
+        return '堇青石'
+    if class_name == 'Jade':
+        return '玉'
+    if class_name == 'Kunzite':
+        return '紫锂辉石'
+    if class_name == 'Labradorite':
+        return '拉长石'
+    if class_name == 'Malachite':
+        return '孔雀石'
+    if class_name == 'Onyx Black':
+        return '缟玛瑙黑'
+    if class_name == 'Pearl':
+        return '珍珠'
+    if class_name == 'Quartz Beer':
+        return '蔷薇石英'
+    if class_name == 'Rhodochrosite':
+        return '红纹石（菱锰矿）'
+    if class_name == 'Sapphire Blue':
+        return '蓝宝石'
+    if class_name == 'Tanzanite':
+        return '坦桑石'
+    if class_name == 'Variscite':
+        return '磷铝石'
+    if class_name == 'Zircon':
+        return '锆石'
 # # ?调试输出检测结果的类型和内容
 # print("Results type:", type(results))
 # print("Results content:", results)
