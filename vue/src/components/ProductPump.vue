@@ -1,59 +1,98 @@
 <template>
   <header-bar></header-bar>
-  <div class="outer-container">
-    <h2 class="text-center">AI创作</h2>
-    <div class="img_container">
-      <div class="container">
-        <div>
-<!--          <form class="w-75" >-->
-            <div>
-              <input type="file" @change="handleGeneratedFileUpload">
-              <div >
-                <img v-if="uploadedImage" :src="uploadedImage" class="uploaded-image"  >
-              </div>
-            </div>
-
-            <div class="mb-3 ">
-              <label class="form-label">提示词</label>
-              <textarea class="form-control" id="prompt" v-model="prompt" rows="2" placeholder="请输入提示词"></textarea>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">反向提示词</label>
-              <textarea id="negativePrompt" v-model="negative_prompt" class="form-control" placeholder="请输入反向提示词"></textarea>
-            </div>
-            <div class="slider-demo-block">
-              <label class="form-label">采样迭代次数</label>
-              <el-slider v-model="steps" :min="1" :max="50" show-input />
-            </div>
-            <div class="slider-demo-block">
-              <label class="form-label">图像高度</label>
-              <el-slider v-model="height" :min="1" :max="1080" show-input />
-            </div>
-            <div class="slider-demo-block">
-              <label class="form-label">图像宽度</label>
-              <el-slider v-model="width" :min="1" :max="1080" show-input />
-            </div>
-<!--            <button @click="ImagegenerateImage" class="btn btn-primary">生成图像</button>-->
-            <el-button @click="ImagegenerateImage" :disabled="uploading" type="primary">生成图像</el-button>
-            <!-- Loading 组件，根据 uploading 变量决定是否显示 -->
-            <el-loading v-if="uploading" text="努力生成中..." :background="'rgba(0, 0, 0, 0.7)'"></el-loading>
-<!--          </form>-->
-
-        </div>
-      </div>
-      <div class="preview-container">
-        <div class="image-preview">
-          <!-- 预览框 -->
-          <img v-if="outputImageBase64" :src="'data:image;base64,' + outputImageBase64" alt="Generated Image">
-        </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col text-center">
+        <h2>AI创作</h2>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-1" v-for="(image, index) in Gem_pictures" :key="index">
-        <div class="product-item">
-          <div class="card text-center">
-            <!-- 使用后端返回的图片数据 -->
-            <img :src="'data:image;base64,' + image" class="card-img-top" alt="...">
+      <div class="col-md-2">
+        <!-- 左侧内容 -->
+        <label>历史记录</label>
+        <el-collapse v-model="activeName" accordion>
+          <template v-for="item in allData" :key="item.name">
+            <el-collapse-item :title="item[0]" :name="item.name">
+              <div>
+                <p>提示词: {{ item[1] }}</p>
+                <p>反向提示词: {{ item[2] }}</p>
+                <p>迭代次数: {{ item[3] }}</p>
+                <p>宽度: {{ item[4] }}</p>
+                <p>高度: {{ item[5] }}</p>
+              </div>
+            </el-collapse-item>
+          </template>
+        </el-collapse>
+      </div>
+      <div class="col-md-6">
+        <!-- 中间内容 -->
+        <div>
+          <input type="file" @change="handleGeneratedFileUpload">
+          <div >
+            <img v-if="uploadedImage" :src="uploadedImage" class="uploaded-image"  >
+          </div>
+        </div>
+        <div>
+          <label class="form-label">提示词</label>
+          <textarea class="form-control" id="prompt" v-model="prompt" rows="2" placeholder="请输入提示词"></textarea>
+          <el-row class="p-2">
+            <el-button round @click="addToPrompt('戒指')">戒指</el-button>
+            <el-button type="primary" round @click="addToPrompt('bracelet')">手链</el-button>
+            <el-button type="success" round @click="addToPrompt('bangle')">手镯</el-button>
+            <el-button type="info" round @click="addToPrompt('pendant')">吊坠</el-button>
+            <el-button type="warning" round @click="addToPrompt('necklace')">项链</el-button>
+            <el-button type="danger" round @click="addToPrompt('brooch')">胸针</el-button>
+            <el-button type="success" round @click="addToPrompt('drop earrings')">耳坠</el-button>
+            <el-button type="primary" round @click="addToPrompt('hoop earrings')">圆形耳环</el-button>
+            <el-button type="info" round @click="addToPrompt('corsage')">胸花</el-button>
+            <el-button type="warning" round @click="addToPrompt('jewelry')">珠宝首饰</el-button>
+          </el-row>
+        </div>
+        <div>
+          <label class="form-label">反向提示词</label>
+          <textarea id="negativePrompt" v-model="negative_prompt" class="form-control" placeholder="请输入反向提示词"></textarea>
+          <el-row class="p-2">
+            <el-button round @click="addToNegativePrompt('Low quality')">低质量</el-button>
+            <el-button type="primary" round @click="addToNegativePrompt('expensive')">昂贵</el-button>
+            <el-button type="success" round @click="addToNegativePrompt('outdated')">过时</el-button>
+            <el-button type="info" round @click="addToNegativePrompt('damaged')">破损</el-button>
+            <el-button type="warning" round @click="addToNegativePrompt('stolen')">失窃</el-button>
+            <el-button type="danger" round @click="addToNegativePrompt('exaggerated')">过于浮夸</el-button>
+            <el-button type="success" round @click="addToNegativePrompt('uncomfortable')">不舒适</el-button>
+            <el-button type="primary" round @click="addToNegativePrompt('allergic')">圆冲突金属</el-button>
+            <el-button type="info" round @click="addToNegativePrompt('tarnished ')">失去光泽</el-button>
+            <el-button type="warning" round @click="addToNegativePrompt('fake')">赝品</el-button>
+          </el-row>
+        </div>
+        <div class="slider-demo-block">
+          <label class="form-label">采样迭代次数</label>
+          <el-slider v-model="steps" :min="1" :max="50" show-input />
+        </div>
+        <div class="slider-demo-block">
+          <label class="form-label">图像高度</label>
+          <el-slider v-model="height" :min="1" :max="1080" show-input />
+        </div>
+        <div class="slider-demo-block">
+          <label class="form-label">图像宽度</label>
+          <el-slider v-model="width" :min="1" :max="1080" show-input />
+        </div>
+        <el-button @click="ImagegenerateImage" :disabled="uploading" type="primary">生成图像</el-button>
+        <el-loading v-if="uploading" text="努力生成中..." :background="'rgba(0, 0, 0, 0.7)'"></el-loading>
+      </div>
+      <div class="col-md-4">
+        <div class="container-fluid">
+          <img :src="outputImageUrl" alt="Generated Image" class="img-thumbnail">
+        </div>
+        <div class="row">
+          <div class="col-md-4" v-for="(image, index) in images" :key="index">
+            <div class="product-item">
+              <div class="card text-center">
+                <!-- 使用后端返回的图片数据 -->
+                <!--            <img :src="'data:image;base64,' + image" class="card-img-top" alt="...">-->
+                <img :src="image" class="card-img-top" alt="...">
+
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -67,10 +106,15 @@ import { ElLoading } from 'element-plus';
 import axios from "axios";
 export default {
   components: {  HeaderBar },
+
   data() {
     return {
+      activeName:'1',
+      items: [],
+      allData: [],
       selectedFile: null,
       outputImageBase64: '', // Initialize to an empty string
+      outputImageUrl:'',
       generatedImage: '',
       file: null,
       originalImageUrl: null,
@@ -82,13 +126,25 @@ export default {
       width: 512,
       prompt: '',
       negative_prompt: '',
-      Gem_pictures:[],
+      images: []
     };
   },
   mounted() {
-    this.gain_gam();
+    this.fetchImages();
   },
   methods: {
+    addToPrompt(value) {
+      if (this.prompt) {
+        this.prompt += ', ';
+      }
+      this.prompt += value;
+    },
+    addToNegativePrompt(value) {
+      if (this.negative_prompt) {
+        this.negative_prompt += ', ';
+      }
+      this.negative_prompt += value;
+    },
     handleGeneratedFileUpload(event) {
       this.selectedFile = event.target.files[0];
       this.uploadedImage = URL.createObjectURL(this.selectedFile);
@@ -137,9 +193,9 @@ export default {
           this.uploading = false;
         });
 
-        if (response.data && response.data.output_image_base64) {
-          this.outputImageBase64 = response.data.output_image_base64;
-          this.gain_gam();
+        if (response.data && response.data.output_image_url) {
+          this.outputImageUrl = response.data.output_image_url;
+          this.fetchImages();
         } else {
           alert('Failed to generate image.');
         }
@@ -176,9 +232,11 @@ export default {
           this.uploading = false;
         });
 
-        if (response.data && response.data.output_image_base64) {
-          this.outputImageBase64 = response.data.output_image_base64;
-          this.gain_gam();
+        if (response.data && response.data.output_image_url) {
+          console.log(response)
+          this.outputImageUrl = response.data.output_image_url;
+          console.log(this.outputImageUrl)
+          this.fetchImages();
         } else {
           alert('Failed to generate image.');
         }
@@ -188,18 +246,46 @@ export default {
       }
     },
     //获取生成的图片
-    gain_gam(){
-      axios.get('http://127.0.0.1:9200/uploadimg/create').then((res)=>{
-        console.log(res)
-        this.Gem_pictures = res.data;
-        // this.$message.success('图片获取成功');
-        // localStorage.setItem('Gem_pictures', JSON.stringify(res.data.data));
-        console.log('图片获取成功');
-      }).catch(()=>{
-        // this.$message.error('图片获取失败');
-        console.log('图片获取失败');
-      })
+    fetchImages() {
+      axios.get('http://127.0.0.1:9200/get_images')
+          .then(response => {
+            this.images = response.data.output_image_urls;
+            this.handleTableData(response.data.create_times); // 调用处理数据的函数
+            this.allData = response.data.all_data;
+            console.log(response)
+          })
+          .catch(error => {
+            console.error('Error fetching images:', error);
+          });
     },
+
+    handleTableData(items) {
+      // 创建一个空数组来存储数据
+      let formattedTableData = [];
+
+      // 遍历 tableData 对象的键
+      Object.keys(items).forEach(function(key) {
+        let dateString = items[key];
+        // 将日期字符串转换为 Date 对象
+        let dateObj = new Date(dateString);
+        // 提取年月日部分
+        let year = dateObj.getFullYear();
+        let month = ("0" + (dateObj.getMonth() + 1)).slice(-2); // 月份从0开始，需要加1
+        let day = ("0" + dateObj.getDate()).slice(-2);
+        // 创建一个字符串，格式为 YYYY-MM-DD
+        let formattedDate = `${year}-${month}-${day}`;
+        // 创建一个对象，其中 data 属性的值为 tableData 对应键的值
+        let newData = {
+          title: formattedDate
+        };
+        // 将新对象添加到 formattedTableData 数组中
+        formattedTableData.push(newData);
+      });
+
+      // 将处理后的数据赋值给组件的 tableData 属性
+      this.items = formattedTableData;
+
+    }
   }
 };
 
@@ -246,28 +332,6 @@ export default {
 .slider-demo-block {
   max-width: 600px;
 }
-.img_container {
-  display: flex;
-}
 
-.container {
-  flex: 1;
-}
 
-.preview-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image-preview {
-  width: 512px;
-  height: 512px;
-  border: 1px solid #595b5d;
-}
-.uploaded-image {
-  width: 250px;
-  height: 250px;
-}
 </style>

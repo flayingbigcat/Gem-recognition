@@ -13,17 +13,25 @@
     <!-- 显示识别结果 -->
     <p >识别结果: {{ prediction }}</p>
   </div>
-
-  <div>
-    <button @click="generateImages">生成图片</button>
-    <img :src="'data:image;base64,' + generatedImage">
+  <div id="app">
+    <h1>Image Gallery</h1>
+    <div v-if="images.length === 0">Loading images...</div>
+    <div v-else>
+      <div v-for="image in images" :key="image" class="w-25">
+        <img :src="image" alt="Image" class="img-thumbnail">
+      </div>
+    </div>
   </div>
-  <div>
-    <input type="file" @change="handleGeneratedFileUpload">
-    <img v-if="uploadedImage" :src="uploadedImage" >
-    <button @click="ImagegenerateImage">Generate Image</button>
-    <img v-if="outputImageBase64" :src="'data:image;base64,' + outputImageBase64" alt="Generated Image">
-  </div>
+<!--  <div>-->
+<!--    <button @click="generateImages">生成图片</button>-->
+<!--    <img :src="'data:image;base64,' + generatedImage">-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <input type="file" @change="handleGeneratedFileUpload">-->
+<!--    <img v-if="uploadedImage" :src="uploadedImage" >-->
+<!--    <button @click="ImagegenerateImage">Generate Image</button>-->
+<!--    <img v-if="outputImageBase64" :src="'data:image;base64,' + outputImageBase64" alt="Generated Image">-->
+<!--  </div>-->
 
   <footer-bar></footer-bar>
 </template>
@@ -46,8 +54,11 @@ export default {
       uploadedImage: null,
       prediction: "",
       uploading: false,
-
+      images: []
     };
+  },
+  created() {
+    this.fetchImages();
   },
   methods: {
     handleGeneratedFileUpload(event) {
@@ -94,7 +105,15 @@ export default {
     closeFullScreen2() {
       ElLoading.service().close();
     },
-
+    fetchImages() {
+      axios.get('http://127.0.0.1:9200/get_images')
+          .then(response => {
+            this.images = response.data.output_image_urls;
+          })
+          .catch(error => {
+            console.error('Error fetching images:', error);
+          });
+    },
     async generateImages() {
       // 发送POST请求以获取生成的图像
       axios.post('http://127.0.0.1:9200/generate')
