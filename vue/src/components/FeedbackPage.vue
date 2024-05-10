@@ -1,37 +1,26 @@
 <template>
   <header-bar></header-bar>
-  <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-    <input type="file" @change="handleFileUpload">
-    <div class="justify-content-center">
-      <img :src="originalImageUrl" v-if="originalImageUrl" alt="上传的图片" class="w-25">
-    </div>
-
-    <el-button @click="uploadImage" :disabled="uploading" type="primary">上传图片</el-button>
-    <!-- Loading 组件，根据 uploading 变量决定是否显示 -->
-    <el-loading v-if="uploading" text="努力创作中..." :background="'rgba(0, 0, 0, 0.7)'"></el-loading>
-
-    <!-- 显示识别结果 -->
-    <p >识别结果: {{ prediction }}</p>
-  </div>
-  <div id="app">
-    <h1>Image Gallery</h1>
-    <div v-if="images.length === 0">Loading images...</div>
-    <div v-else>
-      <div v-for="image in images" :key="image" class="w-25">
-        <img :src="image" alt="Image" class="img-thumbnail">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-2 ">
+        <el-upload
+            class="avatar-uploader"
+            action="http://127.0.0.1:9200/upload_test"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+            :disabled="uploading">
+          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon">上传图片</i>
+        </el-upload>
+        <el-loading v-if="uploading" text="努力生成中..." :background="'rgba(0, 0, 0, 0.7)'"></el-loading>
+      </div>
+      <div class="col-md-5">
+        <h>识别结果: {{ prediction }}</h>
+        <p>{{ gem_content }}</p>
       </div>
     </div>
   </div>
-<!--  <div>-->
-<!--    <button @click="generateImages">生成图片</button>-->
-<!--    <img :src="'data:image;base64,' + generatedImage">-->
-<!--  </div>-->
-<!--  <div>-->
-<!--    <input type="file" @change="handleGeneratedFileUpload">-->
-<!--    <img v-if="uploadedImage" :src="uploadedImage" >-->
-<!--    <button @click="ImagegenerateImage">Generate Image</button>-->
-<!--    <img v-if="outputImageBase64" :src="'data:image;base64,' + outputImageBase64" alt="Generated Image">-->
-<!--  </div>-->
 
   <footer-bar></footer-bar>
 </template>
@@ -46,21 +35,55 @@ export default {
   components: { FooterBar, HeaderBar },
   data() {
     return {
+      imageUrl: '',
       selectedFile: null,
-      outputImageBase64: null,
-      generatedImage: '',
       file: null,
-      originalImageUrl: null,
-      uploadedImage: null,
       prediction: "",
       uploading: false,
-      images: []
+      images: [],
+      gem_content:''
     };
   },
   created() {
     this.fetchImages();
   },
   methods: {
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+      this.uploading = true; // 开始上传时显示加载动画
+      this.openFullScreen2(); // 调用显示全屏加载动画的方法
+
+      let formData = new FormData();
+      formData.append("image", file.raw);
+      console.log(this.imageUrl)
+
+      axios
+          .post("http://127.0.0.1:9200/predict", formData)
+          .then(response => {
+            console.log(response.data);
+            this.prediction = response.data.gem_name;
+            this.gem_content = response.data.gem_content;
+          })
+          .catch(error => {
+            console.error("上传图片时出错: ", error);
+          })
+          .finally(() => {
+            this.closeFullScreen2(); // 接收到数据后关闭加载动画
+            this.uploading = false;
+          })
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    },
     handleGeneratedFileUpload(event) {
       this.selectedFile = event.target.files[0];
       this.uploadedImage = URL.createObjectURL(this.selectedFile);
@@ -114,46 +137,34 @@ export default {
             console.error('Error fetching images:', error);
           });
     },
-    async generateImages() {
-      // 发送POST请求以获取生成的图像
-      axios.post('http://127.0.0.1:9200/generate')
-          .then(response => {
-            // 设置生成的图像的Base64编码数据
-            this.generatedImage = response.data.generated_image_base64;
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-    },
-    async ImagegenerateImage() {
-      if (!this.selectedFile) {
-        alert('Please select an image first.');
-        return;
-      }
-
-      let formData = new FormData();
-      formData.append('image', this.selectedFile);
-
-      try {
-        const response = await axios.post('http://127.0.0.1:9200/upload_image', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
-
-        if (response.data && response.data.output_image_base64) {
-          this.outputImageBase64 = response.data.output_image_base64;
-        } else {
-          alert('Failed to generate image.');
-        }
-      } catch (error) {
-        console.error('Error generating image:', error);
-        alert('Error generating image. Please try again later.');
-      }
-    }
   }
 };
 </script>
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>
 
 
 

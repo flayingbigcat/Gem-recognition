@@ -135,6 +135,50 @@ pool = ThreadPool(processes=MAX_CONNECTIONS)
 #     except Exception as e:
 #         return str(e)
 
+@app.route('/login', methods=['POST'])
+def login():
+
+    user_name = request.get_json()['user_name']
+    user_password = request.get_json()['user_password']
+    # 查询数据库中是否存在匹配的用户
+    with conn.cursor() as cursor:
+        sql = "SELECT * FROM users1 WHERE user_name = %s AND user_password = %s"
+        cursor.execute(sql, (user_name, user_password))
+        user = cursor.fetchone()  # 获取一条用户记录
+
+    if user:
+        # 返回登录成功的响应
+        return jsonify({'status': 'success', 'user': user}), 200
+    else:
+        # 返回登录失败的响应
+        return jsonify({'status': 'fail', 'message': '用户名或密码错误'}), 401
+
+@app.route('/SignUp', methods=['POST'])
+def register():
+    # 获取注册信息
+    user_name = request.get_json()['user_name']
+    user_password = request.get_json()['user_password']
+    user_email = request.get_json()['user_email']
+
+    # 检查用户名是否已经存在
+    with conn.cursor() as cursor:
+        sql = "SELECT * FROM users1 WHERE user_name = %s"
+        cursor.execute(sql, (user_name,))
+        existing_user = cursor.fetchone()
+
+    if existing_user:
+        # 如果用户名已经存在，则返回注册失败的响应
+        return jsonify({'status': 'fail', 'message': '用户名已存在'}), 400
+    else:
+        # 将新用户插入数据库
+        with conn.cursor() as cursor:
+            sql = "INSERT INTO users1 (user_name, user_password,user_email) VALUES (%s, %s,%s)"
+            cursor.execute(sql, (user_name, user_password, user_email))
+            conn.commit()
+
+        # 返回注册成功的响应
+        return jsonify({'status': 'success', 'message': '注册成功'}), 201
+
 @app.route('/get_images', methods=['GET'])
 def get_images_test():
     # 获取完整的服务器地址
@@ -181,7 +225,19 @@ def get_shops():
     cur.close()
     return jsonify(shops)
 
+@app.route('/upload_test', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'})
 
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'})
+
+    # 处理上传的文件，比如保存到服务器或者进行其他操作
+    # 这里只是简单的将文件名返回给前端
+    return jsonify({'filename': file.filename})
 
 
 # 处理文件编码的通用函数
@@ -234,18 +290,48 @@ def predict():
 
     # 对图像进行目标检测
     results = model(image)
-    # 去模型炼出的金丹
+
+    # 宝石类名和对应的中文名称映射字典
+    gemstone_dict = {
+        'Garnet Red': '石榴石',
+        'Alexandrite': '变石(紫翠玉)',
+        'Almandine': '铁铝榴石',
+        'Benitoite': '蓝锥矿晶体',
+        'Beryl Golden': '金绿柱石',
+        'Carnelian': '红玛瑙',
+        'Cats Eye': '猫眼石',
+        'Danburite': '赛黄晶',
+        'Diamond': '钻石',
+        'Emerald': '翡翠',
+        'Fluorite': '萤石',
+        'Garnet Red': '红石榴石',
+        'Hessonite': '钙铝榴石',
+        'Iolite': '堇青石',
+        'Jade': '玉',
+        'Kunzite': '紫锂辉石',
+        'Labradorite': '拉长石',
+        'Malachite': '孔雀石',
+        'Onyx Black': '缟玛瑙黑',
+        'Pearl': '珍珠',
+        'Quartz Beer': '蔷薇石英',
+        'Rhodochrosite': '红纹石（菱锰矿）',
+        'Sapphire Blue': '蓝宝石',
+        'Tanzanite': '坦桑石',
+        'Variscite': '磷铝石',
+        'Zircon': '锆石'
+    }
+
+    # 获取预测的宝石类名
     class_name = results[0].names[results[0].probs.top1]
-
-    return class_name
-# # ?调试输出检测结果的类型和内容
-# print("Results type:", type(results))
-# print("Results content:", results)
-#     detected_objects = []
-#     detected_objects.append({'class_name': results[0].names[results[0].probs.top1], 'confidence': results[0].probs.top1conf.item()})
-
-    # # 将检测到的对象类别和置信度返回给前端
-    # return jsonify({'detected_objects': detected_objects})
+    # 获取对应的中文名称
+    gem_name_cn = gemstone_dict.get(class_name, '未知')
+    cur = conn.cursor()
+    sql = "SELECT gem_content FROM gems WHERE gem_name = %s"
+    cur.execute(sql, (gem_name_cn,))
+    result = cur.fetchone()
+    gem_content = result[0] if result else "暂无介绍"
+    # 返回对应的中文名称，如果不存在则返回 '未知'
+    return jsonify({'gem_name': gem_name_cn, 'gem_content': gem_content})
 
 
 @app.route('/generate', methods=['POST'])
@@ -310,29 +396,6 @@ def generate():
 
     # 返回包含图像 URL 的 JSON 响应
     return jsonify({'output_image_url': output_image_url})
-    # for i in r['images']:
-    #     generated_image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
-    #
-    #     png_payload = {
-    #         "image": "data:image/png;base64," + i
-    #     }
-    #     response2 = requests.post(url=f'{url}/sdapi/v1/png-info', json=png_payload)
-    #
-    #     PI = PngImagePlugin.PngInfo()
-    #     PI.add_text("parameters", response2.json().get("info"))
-    #
-    #     # Save the generated image
-    #     filename = 'generated_image.png'
-    #     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    #     # generated_image.save('generated_image.png', pnginfo=PI)
-    #     generated_image.save(file_path, pnginfo=PI)
-    #
-    # # return jsonify({"generated_image_path": "generated_image.png"})
-    #     # Encode the image as Base64
-    #     with open(file_path, "rb") as img_file:
-    #         base64_image = base64.b64encode(img_file.read()).decode("utf-8")
-    #
-    # return jsonify({"generated_image_base64": base64_image})
 
 @app.route('/images/<filename>')
 def get_text_image(filename):

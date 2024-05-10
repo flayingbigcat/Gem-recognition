@@ -50,23 +50,14 @@ export default {
         const login = () => {
             console.log(JSON.stringify(form.value)); // 打印发送到后端的数据
 
-            axios.post('http://8.134.18.17:8081/login', JSON.stringify(form.value), {
+            axios.post('http://127.0.0.1:9200/login', JSON.stringify(form.value), {
                 headers: {
                     'Content-Type': 'application/json',
                 }
             })
                 .then(response => {
                     // 登录成功
-                    console.log(response.data); // 这里的 response.data 包含了用户信息
-                    localStorage.setItem('user_email', form.value.user_email);
-                    localStorage.setItem('user_name', response.data.user.user_name);
-                    localStorage.setItem('user_id', response.data.user.user_id);
-                    localStorage.setItem('user_sex', response.data.user.user_sex);
-                    localStorage.setItem('user_phone', response.data.user.user_phone);
-                    localStorage.setItem('user_address', response.data.user.user_address);
-                    localStorage.setItem('user_description', response.data.user.user_description);
-                    localStorage.setItem('user_imageSrc', response.data.user.user_imageSrc);
-
+                    console.log(response.data); // 这里的 response.data 包含了用户信
                     console.log('----------------')
 
                     // console.log( localStorage.getItem('user_name'))
