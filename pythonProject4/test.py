@@ -148,18 +148,13 @@ def get_images_test():
     # 构建输出图片的完整 URL 列表
     output_image_urls = [server_url + row[0] for row in img_rows]
 
-    # 从数据库加载图片创建时间
-    cur.execute("SELECT create_img_time FROM create_img")
-    time_rows = cur.fetchall()
-    # 构建输出图片的创建时间列表
-    create_times = [row[0] for row in time_rows]
-
-    cur.execute("SELECT create_img_time, prompt, negative_prompt, steps, height, width FROM create_img")
+    # 从数据库加载数据
+    cur.execute("SELECT * FROM create_img")
     data_prompt = cur.fetchall()
     output_prompt = [row for row in data_prompt]
 
     # 返回包含输出图片 URL 和创建时间的 JSON 响应
-    response_data = {'output_image_urls': output_image_urls, 'create_times': create_times, 'all_data': output_prompt}
+    response_data = {'output_image_urls': output_image_urls, 'all_data': output_prompt}
     return jsonify(response_data)
 
 
@@ -306,6 +301,13 @@ def generate():
     output_image_url = server_url + output_filename
     print(output_image_url)
 
+    #保存到数据库
+    cur = conn.cursor()
+    # 执行插入操作
+    insert_query = "INSERT INTO create_img (create_img_time, img_url, prompt, negative_prompt, steps, height, width) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    cur.execute(insert_query, (time.strftime('%Y-%m-%d %H:%M:%S'), output_filename, prompt, negative_prompt, steps, height, width))
+    conn.commit()
+
     # 返回包含图像 URL 的 JSON 响应
     return jsonify({'output_image_url': output_image_url})
     # for i in r['images']:
@@ -406,6 +408,7 @@ def upload_image():
     # 构建输出图像的完整 URL
     output_image_url = server_url + output_filename
     print(output_image_url)
+
     #保存到数据库
     cur = conn.cursor()
     # 执行插入操作

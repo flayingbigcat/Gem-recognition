@@ -12,13 +12,13 @@
         <label>历史记录</label>
         <el-collapse v-model="activeName" accordion>
           <template v-for="item in allData" :key="item.name">
-            <el-collapse-item :title="item[0]" :name="item.name">
+            <el-collapse-item :title="item[1]" :name="item.name">
               <div>
-                <p>提示词: {{ item[1] }}</p>
-                <p>反向提示词: {{ item[2] }}</p>
-                <p>迭代次数: {{ item[3] }}</p>
-                <p>宽度: {{ item[4] }}</p>
-                <p>高度: {{ item[5] }}</p>
+                <p>提示词: {{ item[3] }}</p>
+                <p>反向提示词: {{ item[4] }}</p>
+                <p>迭代次数: {{ item[5] }}</p>
+                <p>宽度: {{ item[6] }}</p>
+                <p>高度: {{ item[7] }}</p>
               </div>
             </el-collapse-item>
           </template>
@@ -250,42 +250,14 @@ export default {
       axios.get('http://127.0.0.1:9200/get_images')
           .then(response => {
             this.images = response.data.output_image_urls;
-            this.handleTableData(response.data.create_times); // 调用处理数据的函数
-            this.allData = response.data.all_data;
-            console.log(response)
+            this.allData = response.data.all_data
+            console.log(response);
           })
           .catch(error => {
             console.error('Error fetching images:', error);
           });
     },
 
-    handleTableData(items) {
-      // 创建一个空数组来存储数据
-      let formattedTableData = [];
-
-      // 遍历 tableData 对象的键
-      Object.keys(items).forEach(function(key) {
-        let dateString = items[key];
-        // 将日期字符串转换为 Date 对象
-        let dateObj = new Date(dateString);
-        // 提取年月日部分
-        let year = dateObj.getFullYear();
-        let month = ("0" + (dateObj.getMonth() + 1)).slice(-2); // 月份从0开始，需要加1
-        let day = ("0" + dateObj.getDate()).slice(-2);
-        // 创建一个字符串，格式为 YYYY-MM-DD
-        let formattedDate = `${year}-${month}-${day}`;
-        // 创建一个对象，其中 data 属性的值为 tableData 对应键的值
-        let newData = {
-          title: formattedDate
-        };
-        // 将新对象添加到 formattedTableData 数组中
-        formattedTableData.push(newData);
-      });
-
-      // 将处理后的数据赋值给组件的 tableData 属性
-      this.items = formattedTableData;
-
-    }
   }
 };
 
