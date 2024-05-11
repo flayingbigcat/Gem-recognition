@@ -111,6 +111,7 @@ export default {
 
   data() {
     return {
+      user_id:localStorage.getItem('user_id'),
       activeName:'1',
       items: [],
       allData: [],
@@ -169,6 +170,7 @@ export default {
       this.uploading = true; // 开始上传时显示加载动画
       this.openFullScreen2(); // 调用显示全屏加载动画的方法
       let formData = new FormData();
+      formData.append('user_id', this.user_id);
       formData.append('image', this.selectedFile);
       formData.append('steps', this.steps);
       formData.append('height', this.height);
@@ -176,15 +178,6 @@ export default {
       formData.append('negative_prompt', this.negative_prompt);
       formData.append('prompt', this.prompt);
 
-      // 发送POST请求以获取生成的图像
-      // axios.post('http://127.0.0.1:9200/generate')
-      //     .then(response => {
-      //       // 设置生成的图像的Base64编码数据
-      //       this.generatedImage = response.data.generated_image_base64;
-      //     })
-      //     .catch(error => {
-      //       console.error('Error:', error);
-      //     });
       try {
         const response = await axios.post('http://127.0.0.1:9200/generate', formData, {
           headers: {
@@ -216,6 +209,7 @@ export default {
       }
 
       let formData = new FormData();
+      formData.append('user_id', this.user_id);
       formData.append('image', this.selectedFile);
       formData.append('steps', this.steps);
       formData.append('height', this.height);
@@ -249,10 +243,14 @@ export default {
     },
     //获取生成的图片
     fetchImages() {
-      axios.get('http://127.0.0.1:9200/get_images')
+      axios.get('http://127.0.0.1:9200/get_images', {
+        params: {
+          user_id: this.user_id // 将 user_id 作为查询参数传递给后端
+        }
+      })
           .then(response => {
             this.images = response.data.output_image_urls;
-            this.allData = response.data.all_data
+            this.allData = response.data.all_data;
             console.log(response);
           })
           .catch(error => {

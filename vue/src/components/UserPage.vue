@@ -24,30 +24,30 @@
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <router-link class="btn btn-outline-secondary me-md-2" to="/EditInfo">Edit Information ></router-link>
                     </div>
-                    <img class="media-object user-img" v-if="user.user_imageSrc"
-                         :src="require(`../assets/${user.user_imageSrc}`)">
+                    <img class="media-object user-img"
+                         :src="user[7]">
                 </div>
                 <div class="media-body">
-                    <h2 class="media-heading">{{ user.user_name }}</h2>
-                    <p>{{user.user_description}}</p>
+                    <h2 class="media-heading">{{ user[1] }}</h2>
+                    <p>{{user[4]}}</p>
                 </div>
             </div>
             <form class="row g-3">
                 <div class="col-md-4">
                     <label for="inputEmail4" class="form-label">Sex</label>
-                    <p>{{ user.user_sex }}</p>
+                    <p>{{ user[5] }}</p>
                 </div>
                 <div class="col-4">
                     <label for="inputAddress" class="form-label">Email</label>
-                    <p>{{ user.user_email }}</p>
+                    <p>{{ user[2] }}</p>
                 </div>
                 <div class="col-6">
                     <label for="inputAddress2" class="form-label">PhoneNumber</label>
-                    <p>{{user.user_phone}}</p>
+                    <p>{{user[3]}}</p>
                 </div>
                 <div class="col-md-12">
                     <label for="inputCity" class="form-label">Address</label>
-                    <p>{{user.user_address}}</p>
+                    <p>{{user[6]}}</p>
                 </div>
             </form>
         </div>
@@ -81,7 +81,7 @@ export default{
             console.log(user_id)
 
             // };
-            const apiUrl = `http://8.134.18.17:8081/selectUser?id=${user_id}`;//变量请求
+            const apiUrl = `http://127.0.0.1:9200/selectUser?id=${user_id}`;//变量请求
             try {
                 const response = await axios.get(apiUrl);
                 console.log("Response Data:", response.data);

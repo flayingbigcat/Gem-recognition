@@ -19,22 +19,18 @@
                     <div class="single-product-slider">
                         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
-                              <div v-for="(Gem_img, index) in 3" :key="index" :class="{ 'carousel-item': true, 'active': index === 0 }" data-bs-interval="3000">
-                                <img :src="'data:image;base64,' + Gem_img[productId]" class="d-block w-100" alt="...">
-
-                              </div>
-<!--                                <div class="carousel-item active" data-bs-interval="2000">-->
-<!--                                    <img v-if="product_imageSrc"-->
-<!--                                         :src="require(`../assets/${product_imageSrc}`)" class="d-block w-100">-->
-<!--                                </div>-->
-<!--                                <div class="carousel-item" data-bs-interval="2000">-->
-<!--                                    <img v-if="product_imageSrc1"-->
-<!--                                         :src="require(`../assets/${product_imageSrc1}`)" class="d-block w-100">-->
-<!--                                </div>-->
-<!--                                <div class="carousel-item" data-bs-interval="2000">-->
-<!--                                    <img v-if="product_imageSrc2"-->
-<!--                                         :src="require(`../assets/${product_imageSrc2}`)" class="d-block w-100">-->
-<!--                                </div>-->
+                                <div class="carousel-item active" data-bs-interval="2000">
+                                    <img v-if="product_imageSrc"
+                                         :src="product[3]" class="d-block w-100">
+                                </div>
+                                <div class="carousel-item" data-bs-interval="2000">
+                                    <img v-if="product_imageSrc1"
+                                         :src="product[5]" class="d-block w-100">
+                                </div>
+                                <div class="carousel-item" data-bs-interval="2000">
+                                    <img v-if="product_imageSrc2"
+                                         :src="product[6]" class="d-block w-100">
+                                </div>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -49,10 +45,10 @@
                 </div>
                 <div class="col-md-7">
                     <div class="single-product-details">
-                        <h2>{{product_name}}</h2>
-                        <p class="product-price">{{product_price}}</p>
+                        <h2>{{product[1]}}</h2>
+                        <p class="product-price">{{product[2]}}</p>
 
-                        <p class="product-description mt-20">{{product_description1}}</p>
+                        <p class="product-description mt-20">{{product[4]}}</p>
                         <div class="color-swatches">
                             <span>color:</span>
                             <ul>
@@ -104,6 +100,7 @@ export default {
     data() {
         return {
             Gem_img:[],
+          product:[],
             quantity: 1, // 初始化为1
             product_imageSrc:'product_1.jpg',
             product_imageSrc1:'product_2.jpg',
@@ -111,11 +108,11 @@ export default {
             product_name:'',
             product_price:'',
             product_description1:'',
-            localProductId: this.$route.params.product_id, // 使用本地 data 属性
+            localProductId: this.$route.params.productId // 使用本地 data 属性
         };
     },
     created() {
-        this.loadProductData();
+        this.loadProductData()
     },
     methods: {
         changeQuantity(change) {
@@ -124,33 +121,26 @@ export default {
                 this.quantity = newQuantity;
             }
         },
-        loadProductData() {
-            if (this.productId) {
-                // 创建一个对象来发送 id 参数
-                const params = new URLSearchParams();
-                params.append('id', this.productId);
+      loadProductData() {
+        if (this.localProductId) {
+          // 发送GET请求，将product_id作为查询参数传递
+          axios.get('http://127.0.0.1:9200/get_shops?query_type=by_id&product_id=' + this.localProductId)
+              .then(response => {
+                // 请求成功，处理返回的数据
+                console.log(response.data)
 
-                axios.post('http://8.134.18.17:8081/selectShop1', params)
-                    .then(response => {
-                        // 请求成功，处理返回的数据
-                        console.log(response.data)
-                        const product = response.data;
-                        this.product_name = product.product_name;
-                        this.product_price = product.product_price;
-                        this.product_description1 = product.product_description1;
-                        this.product_imageSrc = product.product_imageSrc;
-                        this.product_imageSrc1 = product.product_imageSrc1;
-                        this.product_imageSrc2 = product.product_imageSrc2;
-                    })
-                    .catch(error => {
-                        // 请求失败，打印错误信息
-                        console.error('Error fetching product data:', error);
-                    });
-            } else {
-                // productId 未定义，打印错误信息
-                console.error('Product ID is undefined');
-            }
-        },
+                this.product = response.data[0]
+                console.log(this.product)
+              })
+              .catch(error => {
+                // 请求失败，打印错误信息
+                console.error('Error fetching product data:', error);
+              });
+        } else {
+          // productId 未定义，打印错误信息
+          console.error('Product ID is undefined');
+        }
+      },
         addToCart() {
             // 获取user_id
             const userId = localStorage.getItem('user_id');

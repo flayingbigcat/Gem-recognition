@@ -57,6 +57,7 @@ export default {
   components: { FooterBar, HeaderBar },
   data() {
     return {
+      user_id:localStorage.getItem('user_id'),
       allData: [],
       activeName:'1',
       imageUrl: '',
@@ -79,6 +80,7 @@ export default {
 
       let formData = new FormData();
       formData.append("image", file.raw);
+      formData.append("user_id", this.user_id); // 将 user_id 添加到 FormData 中
       console.log(this.imageUrl)
 
       axios
@@ -124,14 +126,16 @@ export default {
       ElLoading.service().close();
     },
     fetchImages() {
-      axios.get('http://127.0.0.1:9200/get_history')
-          .then(response => {
-            console.log(response)
-            this.allData = response.data.all_data
-          })
-          .catch(error => {
-            console.error('Error fetching images:', error);
-          });
+      axios.get('http://127.0.0.1:9200/get_history', {
+        params: {
+          user_id: this.user_id // 将 user_id 作为查询参数传递给后端
+        }
+      }).then(response => {
+        console.log(response)
+        this.allData = response.data.all_data
+      }).catch(error => {
+        console.error('Error fetching images:', error);
+      });
     },
   }
 };

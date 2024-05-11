@@ -18,7 +18,7 @@
               <div v-for="(image, index) in images" :key="index" :class="{ 'carousel-item': true, 'active': index === 0 }" data-bs-interval="3000">
                 <img :src="'data:image;base64,' + image" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-block">
-                  <h5 class="fs-1">{{ titles[index % 3] }}</h5> <!-- 使用数组的索引，确保在3个标题中循环 -->
+                  <h5 class="fs-2">{{ titles[index % 3] }}</h5> <!-- 使用数组的索引，确保在3个标题中循环 -->
                 </div>
               </div>
             </div>

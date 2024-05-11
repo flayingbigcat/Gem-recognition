@@ -56,7 +56,7 @@ export default {
               const userId = responseData.user_id;
                // 将 user_id 存储在本地存储中
               localStorage.setItem('user_id', userId)
-              console.log(localStorage.setItem('user_id', userId))
+              console.log(userId)
               user_id.value = userId; // 将 user_id 存储在响应式变量中
               router.push('/index');
             } else {

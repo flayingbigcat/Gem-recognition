@@ -10,7 +10,7 @@
                           <img :src="'data:image;base64,' + Gem_pictures[startIndex+index]" class="card-img-top" alt="...">
                             <div class="card-body ">
                                 <h5 class="card-title">{{ product[1] }}</h5>
-                                <h5 class="card-text">{{product[2]}}</h5>
+                                <h5 class="card-text">{{product[3]}}</h5>
 <!--                                <p class="card-text">{{ product.product_description }}</p>-->
                                 <div class="d-grid gap-2 d-md-flex justify-content-center">
                                     <router-link :to="`/ProductSingle/${product[0]}`" class="btn btn-dark me-md-2">View</router-link>
