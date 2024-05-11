@@ -33,76 +33,60 @@ import { ElMessage } from 'element-plus'
 import {ref} from 'vue';
 
 export default {
-    name:'LoginView',
-    setup(){
-        const form = ref({
-            user_email:'',
-            user_name:'',
-            user_password:'',
-            user_id:'',
-            user_sex:'',
-            user_phone:'',
-            user_address:'',
-            user_description:'',
-            user_imageSrc:''
-        })
-        const router = useRouter();
-        const login = () => {
-            console.log(JSON.stringify(form.value)); // 打印发送到后端的数据
+  name: 'LoginView',
+  setup() {
+    const form = ref({
+      user_email: '',
+      user_password: '',
+    });
+    const router = useRouter();
+    const user_id = ref(null); // 创建一个响应式变量用于存储 user_id
 
-            axios.post('http://127.0.0.1:9200/login', JSON.stringify(form.value), {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-                .then(response => {
-                    // 登录成功
-                    console.log(response.data); // 这里的 response.data 包含了用户信
-                    console.log('----------------')
+    const login = () => {
+      axios.post('http://127.0.0.1:9200/login', JSON.stringify(form.value), {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+          .then(response => {
+            // 登录成功
+            console.log(response.data); // 这里的 response.data 包含了用户信息
+            const responseData = response.data;
+            if (responseData.status === 'success') {
+              const userId = responseData.user_id;
+               // 将 user_id 存储在本地存储中
+              localStorage.setItem('user_id', userId)
+              console.log(localStorage.setItem('user_id', userId))
+              user_id.value = userId; // 将 user_id 存储在响应式变量中
+              router.push('/index');
+            } else {
+              failed();
+            }
+          })
+          .catch(error => {
+            if (error.response && error.response.status === 401) {
+              failed();
+            } else {
+              ElMessage.error('登录失败');
+            }
+          });
+    };
 
-                    // console.log( localStorage.getItem('user_name'))
-                    // console.log( localStorage.getItem('user_id'))
-                    // console.log( localStorage.getItem('user_sex'))
-                    // console.log( localStorage.getItem('user_phone'))
-                    // console.log( localStorage.getItem('user_address'))
-                    // console.log( localStorage.getItem('user_description'))
-                    // console.log( localStorage.getItem('user_imageSrc'))
-                    router.push('/index');
-                })
-                .catch(error => {
-                    if (error.response && error.response.status === 401) {
-                        // 用户名或密码错误
-                        ElMessage.error('用户名或密码错误');
-                    } else {
-                        // 其他错误
-                        ElMessage.error('登录失败');
-                    }
-                });
-        };
-        const success = () => {
-            ElMessage({
-                message: '登录成功！',
-                type: 'success',
-            })
-        }
-        const failed = () => {
-            ElMessage({
-                message: '账号或密码错误！登陆失败！',
-                type: 'error',
-            })
-        }
-        const register = () => {
-            // 跳转到注册页面
-            router.push('/SignUp');
-        }
-        return{
-            login,
-            register,
-            form,
-            success,
-            failed
-        }
-    }
+    const failed = () => {
+      ElMessage.error('用户名或密码错误');
+    };
+
+    const register = () => {
+      router.push('/SignUp');
+    };
+
+    return {
+      login,
+      register,
+      form,
+      user_id, // 将 user_id 暴露给模板
+    };
+  },
 };
 </script>
 

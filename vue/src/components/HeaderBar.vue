@@ -74,20 +74,20 @@ export default {
                 <ul class="nav justify-content-end">
                     <!-- 使用v-if和v-else来根据user_id的值显示不同的链接 -->
                     <li class="nav-item">
-                        <router-link v-if="user_id" class="nav-link active" @click="logout" to="/index">Login out</router-link>
-                        <router-link v-else class="nav-link active" to="/login">Login</router-link>
+                        <router-link v-if="user_id" class="nav-link active" @click="logout" to="/index">退出登录</router-link>
+                        <router-link v-else class="nav-link active" to="/login">登录</router-link>
                     </li>
                     <li class="nav-item" v-if="!user_id">
-                        <router-link class="nav-link active" to="/SignUp">Signup</router-link>
+                        <router-link class="nav-link active" to="/SignUp">注册</router-link>
                     </li>
                     <li class="nav-item dropdown" v-if="user_id">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
+                           更多
                         </a>
                         <ul class="dropdown-menu">
-                            <li><router-link class="dropdown-item" to="/CartPage">Cart</router-link></li>
+                            <li><router-link class="dropdown-item" to="/CartPage">收藏</router-link></li>
                             <li><router-link class="dropdown-item" to="/OrderPage">Order</router-link></li>
-                            <li><router-link class="dropdown-item" to="/UserPage">UserPage</router-link></li>
+                            <li><router-link class="dropdown-item" to="/UserPage">用户</router-link></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><router-link class="dropdown-item" to="/">Something else here</router-link></li>
                         </ul>

@@ -97,7 +97,7 @@ def get_image_tset(folder, filename):
     folder_path = f'IMG/{folder}'
     return send_from_directory(folder_path, filename)
 
-url = "http://127.0.0.1:7860"
+url = "http://0.0.0.0:7860"
 
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -148,19 +148,17 @@ pool = ThreadPool(processes=MAX_CONNECTIONS)
 @app.route('/login', methods=['POST'])
 def login():
 
-    user_email = request.get_json()['user_email']
+    user_name = request.get_json()['user_name']
     user_password = request.get_json()['user_password']
     # 查询数据库中是否存在匹配的用户
     with conn.cursor() as cursor:
-        sql = "SELECT user_id,user_email, user_password FROM users1 WHERE user_email = %s AND user_password = %s"
-        cursor.execute(sql, (user_email, user_password))
+        sql = "SELECT * FROM users1 WHERE user_name = %s AND user_password = %s"
+        cursor.execute(sql, (user_name, user_password))
         user = cursor.fetchone()  # 获取一条用户记录
-        print(user)
 
     if user:
-        user_id = user[0]  # 获取用户的 user_id
-        # 返回登录成功的响应，包含用户的 user_id
-        return jsonify({'status': 'success', 'user_id': user_id}), 200
+        # 返回登录成功的响应
+        return jsonify({'status': 'success', 'user': user}), 200
     else:
         # 返回登录失败的响应
         return jsonify({'status': 'fail', 'message': '用户名或密码错误'}), 401
@@ -392,6 +390,7 @@ def get_datas():
 
     output_prompt = [row for row in data_prompt]
 
+    conn.close()
     # 返回包含输出图片 URL 和创建时间的 JSON 响应
     response_data = {'all_data': output_prompt}
     return jsonify(response_data)
@@ -518,7 +517,7 @@ def upload_image():
         "restore_faces": restore_faces,
     }
     # # 发送请求
-    response = requests.post(url=f'http://127.0.0.1:7860/sdapi/v1/img2img', json=payload)
+    response = requests.post(url=f'http://0.0.0.0:7860/sdapi/v1/img2img', json=payload)
     r = response.json()
     output_image = Image.open(io.BytesIO(base64.b64decode(r['images'][0])))
     #

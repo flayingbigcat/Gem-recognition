@@ -20,6 +20,28 @@
         <p>{{ gem_content }}</p>
       </div>
     </div>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <label>历史记录</label>
+        <el-collapse v-model="activeName" accordion>
+          <template v-for="item in allData" :key="item.name">
+            <el-collapse-item :title="item[4]" :name="item.name">
+              <div>
+                <div class="demo-image__placeholder">
+                  <div class="block">
+                    <span class="demonstration"><p>宝石名称: {{ item[3] }}</p></span>
+                    <el-image :src="item[2]">
+                    </el-image>
+                  </div>
+                </div>
+                <p>{{ item[1] }}</p>
+
+              </div>
+            </el-collapse-item>
+          </template>
+        </el-collapse>
+      </div>
+    </div>
   </div>
 
   <footer-bar></footer-bar>
@@ -35,6 +57,8 @@ export default {
   components: { FooterBar, HeaderBar },
   data() {
     return {
+      allData: [],
+      activeName:'1',
       imageUrl: '',
       selectedFile: null,
       file: null,
@@ -63,6 +87,7 @@ export default {
             console.log(response.data);
             this.prediction = response.data.gem_name;
             this.gem_content = response.data.gem_content;
+            this.fetchImages()
           })
           .catch(error => {
             console.error("上传图片时出错: ", error);
@@ -84,36 +109,6 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    handleGeneratedFileUpload(event) {
-      this.selectedFile = event.target.files[0];
-      this.uploadedImage = URL.createObjectURL(this.selectedFile);
-    },
-    handleFileUpload(event) {
-      this.file = event.target.files[0];
-      this.originalImageUrl = URL.createObjectURL(this.file);
-    },
-    uploadImage() {
-      this.uploading = true; // 开始上传时显示加载动画
-      this.openFullScreen2(); // 调用显示全屏加载动画的方法
-
-      let formData = new FormData();
-      formData.append("image", this.file);
-
-      axios
-          .post("http://127.0.0.1:9200/predict", formData)
-          .then(response => {
-            console.log(response.data);
-            this.prediction = response.data;
-
-          })
-          .catch(error => {
-            console.error("上传图片时出错: ", error);
-          })
-          .finally(() => {
-            this.closeFullScreen2(); // 接收到数据后关闭加载动画
-            this.uploading = false;
-          });
-    },
     openFullScreen2() {
        ElLoading.service({
         lock: true,
@@ -129,9 +124,10 @@ export default {
       ElLoading.service().close();
     },
     fetchImages() {
-      axios.get('http://127.0.0.1:9200/get_images')
+      axios.get('http://127.0.0.1:9200/get_history')
           .then(response => {
-            this.images = response.data.output_image_urls;
+            console.log(response)
+            this.allData = response.data.all_data
           })
           .catch(error => {
             console.error('Error fetching images:', error);
