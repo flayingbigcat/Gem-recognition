@@ -191,21 +191,41 @@ def register():
         # 返回注册成功的响应
         return jsonify({'status': 'success', 'message': '注册成功'}), 201
 
+# 根据用户ID查询用户信息的接口
+@app.route('/selectUser', methods=['GET'])  # 定义路由 '/selectUser'，处理 GET 请求
+def select_user():
+    user_id = request.args.get('id')  # 获取 URL 参数中的用户ID
+    try:
+        with conn.cursor() as cursor:
+            # 查询数据库中用户信息，排除密码字段
+            sql = "SELECT user_id, user_name, user_email, user_phone, user_address, user_sex, user_description, user_imageSrc FROM users1 WHERE user_id = %s"
+            cursor.execute(sql, user_id)  # 执行查询
+            user = cursor.fetchone()  # 获取查询结果的第一条数据
+            if user:
+                return jsonify(user)  # 将用户信息以 JSON 格式返回给前端
+            else:
+                return jsonify({'error': '没有该用户'}), 404  # 若未找到用户，返回错误信息
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500  # 若发生异常，返回异常信息
+
 @app.route('/get_images', methods=['GET'])
 def get_images_test():
     # 获取完整的服务器地址
     server_url = request.host_url
 
+    # 从请求中获取用户ID
+    user_id = request.args.get('user_id')
+
     # 从数据库加载输出图片的文件名
     cur = conn.cursor()
-    cur.execute("SELECT img_url FROM create_img")
+    cur.execute("SELECT img_url FROM create_img WHERE user_id = %s", (user_id,))
     img_rows = cur.fetchall()
 
     # 构建输出图片的完整 URL 列表
     output_image_urls = [server_url + row[0] for row in img_rows]
 
     # 从数据库加载数据
-    cur.execute("SELECT * FROM create_img")
+    cur.execute("SELECT * FROM create_img WHERE user_id = %s", (user_id,))
     data_prompt = cur.fetchall()
     output_prompt = [row for row in data_prompt]
 
@@ -221,9 +241,10 @@ def get_shops():
 
     cur = conn.cursor()
     if query_type == 'all':
-        cur.execute("SELECT * FROM shop")
+        cur.execute("SELECT product_id, product_name, product_imageSrc ,product_price FROM shop")
     elif query_type == 'by_id':
         product_id = request.args.get('product_id')
+        print(product_id)
         cur.execute("SELECT * FROM shop WHERE product_id=%s", (product_id,))
     elif query_type == 'by_name':
         product_name = request.args.get('product_name')
@@ -290,6 +311,8 @@ def upload_create_Gem():
 def predict():
     # 从请求中获取图像文件
     img_file = request.files['image']
+    user_id = request.form.get('user_id')
+    print(user_id)
 
     # 加载 YOLO 模型
     model = YOLO('./best.pt')
@@ -364,17 +387,11 @@ def predict():
     # 获取当前时间
     rec_time = time.strftime('%Y-%m-%d')
 
-    # 从数据库中获取宝石介绍
-    # cur = conn.cursor()
-    # sql = "SELECT gem_content FROM gems WHERE gem_name = %s"
-    # cur.execute(sql, (gem_name_cn,))
-    # result = cur.fetchone()
-    # gem_content = result['gem_content'] if result else "暂无介绍"
 
     # 数据写入到数据库的 rec_gem 表中
     cur = conn.cursor()
-    sql = "INSERT INTO rec_gem (gem_content, gem_img_url, gem_name, rec_time) VALUES (%s, %s, %s, %s)"
-    cur.execute(sql, (gem_content, output_image_urls, gem_name_cn, rec_time))
+    sql = "INSERT INTO rec_gem (user_id, gem_content, gem_img_url, gem_name, rec_time) VALUES (%s,%s, %s, %s, %s)"
+    cur.execute(sql, (user_id, gem_content, output_image_urls, gem_name_cn, rec_time))
     conn.commit()
     cur.close()
 
@@ -382,12 +399,14 @@ def predict():
 
 @app.route('/get_history', methods=['GET'])
 def get_datas():
+    # 从请求中获取用户ID
+    user_id = request.args.get('user_id')
 
     # 从数据库加载输出图片的文件名
     cur = conn.cursor()
 
     # 从数据库加载数据
-    cur.execute("SELECT * FROM rec_gem")
+    cur.execute("SELECT * FROM rec_gem WHERE user_id = %s", (user_id,))
     data_prompt = cur.fetchall()
 
     output_prompt = [row for row in data_prompt]
@@ -401,6 +420,7 @@ def generate():
 
 
     # # Extract parameters from request
+    user_id = int(request.form['user_id'])
     steps = int(request.form['steps'])
     prompt = request.form['prompt']
     negative_prompt = request.form['negative_prompt']
@@ -452,8 +472,8 @@ def generate():
     #保存到数据库
     cur = conn.cursor()
     # 执行插入操作
-    insert_query = "INSERT INTO create_img (create_img_time, img_url, prompt, negative_prompt, steps, height, width) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-    cur.execute(insert_query, (time.strftime('%Y-%m-%d'), output_filename, prompt, negative_prompt, steps, height, width))
+    insert_query = "INSERT INTO create_img (user_id, create_img_time, img_url, prompt, negative_prompt, steps, height, width) VALUES (%s,%s, %s, %s, %s, %s, %s, %s)"
+    cur.execute(insert_query, (user_id, time.strftime('%Y-%m-%d'), output_filename, prompt, negative_prompt, steps, height, width))
     conn.commit()
 
     # 返回包含图像 URL 的 JSON 响应
@@ -486,6 +506,7 @@ def upload_image():
     print(encoded_image)
     #
     # # # Extract parameters from request
+    user_id = int(request.form['user_id'])
     steps = int(request.form['steps'])
     prompt = request.form['prompt']
     negative_prompt = request.form['negative_prompt']
@@ -539,8 +560,8 @@ def upload_image():
     # #保存到数据库
     cur = conn.cursor()
     # # 执行插入操作
-    insert_query = "INSERT INTO create_img (create_img_time, img_url, prompt, negative_prompt, steps, height, width) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-    cur.execute(insert_query, (time.strftime('%Y-%m-%d'), output_filename, prompt, negative_prompt, steps, height, width))
+    insert_query = "INSERT INTO create_img (user_id, create_img_time, img_url, prompt, negative_prompt, steps, height, width) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+    cur.execute(insert_query, (user_id, time.strftime('%Y-%m-%d'), output_filename, prompt, negative_prompt, steps, height, width))
     conn.commit()
 
     # 返回包含图像 URL 的 JSON 响应

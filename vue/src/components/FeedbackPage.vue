@@ -1,7 +1,12 @@
 <template>
   <header-bar></header-bar>
   <div class="container-fluid">
-    <div class="row justify-content-center">
+    <div class="row">
+      <div class="col text-center" style="padding: 30px">
+        <h2>宝石识别</h2>
+      </div>
+    </div>
+    <div class="row justify-content-center" style="padding: 20px">
       <div class="col-md-2 ">
         <el-upload
             class="avatar-uploader"

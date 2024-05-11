@@ -2,12 +2,12 @@
     <div class="product">
         <div class="container">
             <div class="row">
-                <div class="col-md-3" v-for="(product , index) in displayedProducts" :key="product[0]">
+                <div class="col-md-3" v-for="(product ) in displayedProducts" :key="product[0]">
                     <div class="product-item">
                         <div class="card text-center ">
                             <!-- 使用 require 导入图片 -->
 <!--                            <img :src="require(`../assets/${product.product_imageSrc}`)" class="card-img-top" alt="">-->
-                          <img :src="'data:image;base64,' + Gem_pictures[startIndex+index]" class="card-img-top" alt="...">
+                          <img :src="product[2]" class="card-img-top" alt="...">
                             <div class="card-body ">
                                 <h5 class="card-title">{{ product[1] }}</h5>
                                 <h5 class="card-text">{{product[3]}}</h5>
