@@ -68,7 +68,7 @@ export default {
                         <router-link class="nav-link active" to="/FeedbackPage">宝石识别</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link active" to="/">About</router-link>
+                        <router-link class="nav-link active" to="/">关于</router-link>
                     </li>
                 </ul>
                 <ul class="nav justify-content-end">
@@ -86,16 +86,16 @@ export default {
                         </a>
                         <ul class="dropdown-menu">
                             <li><router-link class="dropdown-item" to="/CartPage">收藏</router-link></li>
-                            <li><router-link class="dropdown-item" to="/OrderPage">Order</router-link></li>
+                            <li><router-link class="dropdown-item" to="/OrderPage">订单</router-link></li>
                             <li><router-link class="dropdown-item" to="/UserPage">用户</router-link></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><router-link class="dropdown-item" to="/">Something else here</router-link></li>
+                            <li><router-link class="dropdown-item" to="/">了解更多</router-link></li>
                         </ul>
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
-                    <input v-model="productName" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button @click="searchProduct" class="btn btn-outline-success" type="button">Search</button>
+                    <input v-model="productName" class="form-control me-3" type="search" placeholder="搜索" aria-label="Search">
+                    <button @click="searchProduct" class="btn btn-outline-success" type="button">搜索</button>
                 </form>
             </div>
         </div>

@@ -208,6 +208,23 @@ def select_user():
     except Exception as e:
         return jsonify({'error': str(e)}), 500  # 若发生异常，返回异常信息
 
+
+@app.route('/reviseUser', methods=['POST'])
+def revise_user():
+    try:
+        user_data = request.json
+
+        print(user_data)
+
+        cur = conn.cursor()
+        update_query = """UPDATE users1 SET user_name=%s, user_email=%s, user_address=%s, user_phone=%s, user_sex=%s, user_description=%s, user_imageSrc=%s WHERE user_id=%s"""
+        cur.execute(update_query, (user_data['user_name'], user_data['user_email'], user_data['user_address'], user_data['user_phone'], user_data['user_sex'], user_data['user_description'], user_data['user_imageSrc'], user_data['user_id']))
+
+
+        return '', 204
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/get_images', methods=['GET'])
 def get_images_test():
     # 获取完整的服务器地址

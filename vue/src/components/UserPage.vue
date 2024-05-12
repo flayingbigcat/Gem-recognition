@@ -5,11 +5,11 @@
             <div class="row">
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="content">
-                        <h1 class="page-name">Welcome</h1>
+                        <h1 class="page-name">欢迎</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/">Home</router-link></li>
-                                <li class="breadcrumb-item active" aria-current="page">Order</li>
+                                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/">首页</router-link></li>
+                                <li class="breadcrumb-item active" aria-current="page">收藏</li>
                             </ol>
                         </nav>
                     </div>
@@ -22,7 +22,7 @@
             <div class="media">
                 <div class="pull-left mb-2">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <router-link class="btn btn-outline-secondary me-md-2" to="/EditInfo">Edit Information ></router-link>
+                        <router-link class="btn btn-outline-secondary me-md-2" to="/EditInfo">更改信息 ></router-link>
                     </div>
                     <img class="media-object user-img"
                          :src="user[7]">
@@ -34,20 +34,20 @@
             </div>
             <form class="row g-3">
                 <div class="col-md-4">
-                    <label for="inputEmail4" class="form-label">Sex</label>
+                    <label for="inputEmail4" class="form-label">性别</label>
                     <p>{{ user[5] }}</p>
                 </div>
                 <div class="col-4">
-                    <label for="inputAddress" class="form-label">Email</label>
+                    <label for="inputAddress" class="form-label">邮箱</label>
                     <p>{{ user[2] }}</p>
                 </div>
                 <div class="col-6">
-                    <label for="inputAddress2" class="form-label">PhoneNumber</label>
+                    <label for="inputAddress2" class="form-label">电话号码</label>
                     <p>{{user[3]}}</p>
                 </div>
                 <div class="col-md-12">
-                    <label for="inputCity" class="form-label">Address</label>
-                    <p>{{user[6]}}</p>
+                    <label for="inputCity" class="form-label">地址</label>
+                    <p>{{7}}</p>
                 </div>
             </form>
         </div>
