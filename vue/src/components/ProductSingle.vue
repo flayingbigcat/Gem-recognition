@@ -8,8 +8,8 @@
                 <div class="col-md-6">
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><router-link to="/index" style="text-decoration: none;">Home</router-link></li>
-                            <li class="breadcrumb-item active" aria-current="page">Library</li>
+                            <li class="breadcrumb-item"><router-link to="/index" style="text-decoration: none;">首页</router-link></li>
+                            <li class="breadcrumb-item active" aria-current="page">商城</li>
                         </ol>
                     </nav>
                 </div>
@@ -50,7 +50,7 @@
 
                         <p class="product-description mt-20">{{product[4]}}</p>
                         <div class="color-swatches">
-                            <span>color:</span>
+                            <span>颜色:</span>
                             <ul>
                                 <li>
                                     <a href="#!" class="swatch-violet"></a>
@@ -64,7 +64,7 @@
                             </ul>
                         </div>
                         <div class="product-size">
-                            <span>Size:</span>
+                            <span>尺寸:</span>
                             <select class="form-control">
                                 <option>99</option>
                                 <option>98</option>
@@ -72,14 +72,14 @@
                             </select>
                         </div>
                         <div class="product-quantity">
-                            <span>Quantity:</span>
+                            <span>数量:</span>
                             <div class="quantity-modifier">
                                 <button @click="changeQuantity(-1)">-</button>
                                 <input v-model="quantity" type="text" name="product-quantity">
                                 <button @click="changeQuantity(1)">+</button>
                             </div>
                         </div>
-                        <button class="btn btn-info mt-20" type="button" @click="addToCart">put cart</button>
+                        <button class="btn btn-info mt-20" type="button" @click="addToCart">购买</button>
                     </div>
                 </div>
             </div>

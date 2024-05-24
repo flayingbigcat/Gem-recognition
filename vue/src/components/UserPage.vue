@@ -53,18 +53,16 @@
         </div>
     </div>
 
-    <footer-bar></footer-bar>
 </template>
 
 <script>
 import HeaderBar from "@/components/HeaderBar.vue";
-import FooterBar from "@/components/FooterPage.vue";
 import axios from "axios";
 // import { defineComponent, ref, onMounted } from 'vue';
 // import axios from "axios";
 
 export default{
-    components: {FooterBar, HeaderBar},
+    components: { HeaderBar},
     data() {
         return {
             // 从localStorage获取数据并初始化data属性

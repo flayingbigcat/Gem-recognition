@@ -49,17 +49,15 @@
     </div>
   </div>
 
-  <footer-bar></footer-bar>
 </template>
 
 <script>
 import { ElLoading } from 'element-plus';
 import axios from 'axios';
 import HeaderBar from "@/components/HeaderBar.vue";
-import FooterBar from "@/components/FooterPage.vue";
 
 export default {
-  components: { FooterBar, HeaderBar },
+  components: { HeaderBar },
   data() {
     return {
       user_id:localStorage.getItem('user_id'),

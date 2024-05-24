@@ -97,7 +97,6 @@
         </div>
       </div>
     </div>
-    <footer-bar></footer-bar>
   </div>
 </template>
 
@@ -107,7 +106,7 @@ import { ElLoading } from 'element-plus';
 import axios from "axios";
 import FooterBar from "@/components/FooterPage.vue";
 export default {
-  components: {FooterBar,  HeaderBar },
+  components: { HeaderBar },
 
   data() {
     return {

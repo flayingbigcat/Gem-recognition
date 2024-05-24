@@ -64,20 +64,18 @@
         </div>
     </div>
 
-    <footer-bar></footer-bar>
 </template>
 
 
 <script>
 // import {defineComponent} from 'vue'
 import HeaderBar from "@/components/HeaderBar.vue";
-import FooterBar from "@/components/FooterPage.vue";
 import axios from 'axios';
 
 
 export default {
     name: "EditInfo",
-    components: { HeaderBar, FooterBar },
+    components: { HeaderBar },
     data() {
         return {
             // 从localStorage获取数据并初始化data属性

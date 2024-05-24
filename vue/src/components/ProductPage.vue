@@ -13,8 +13,8 @@
                                 <h5 class="card-text">{{product[3]}}</h5>
 <!--                                <p class="card-text">{{ product.product_description }}</p>-->
                                 <div class="d-grid gap-2 d-md-flex justify-content-center">
-                                    <router-link :to="`/ProductSingle/${product[0]}`" class="btn btn-dark me-md-2">View</router-link>
-                                    <button class="btn btn-info" type="button" @click="addToCart(product)">put cart</button>
+                                    <router-link :to="`/ProductSingle/${product[0]}`" class="btn btn-dark me-md-2">查看</router-link>
+                                    <button class="btn btn-info" type="button" @click="addToCart(product)">收藏</button>
                                 </div>
                             </div>
                         </div>

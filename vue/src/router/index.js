@@ -11,6 +11,7 @@ import EditInfo from '../components/EditInfo.vue'
 import ProductPump from '../components/ProductPump.vue'
 import PumpSingle from "@/components/PumpSingle.vue";
 import ProductSingle from "@/components/ProductSingle.vue";
+import TransStyle from "@/components/TransStyle.vue";
 //
 // // 创建路由实例
 // const router = createRouter({
@@ -38,6 +39,11 @@ import HelloWorld from '../components/Index.vue'
 import UserPage from  '../components/UserPage.vue'
 
 const routes = [
+
+    {
+        path: '/TransStyle',
+        component: TransStyle,
+    },
     {
         path:'/',
         component: HelloWorld,

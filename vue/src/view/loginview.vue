@@ -1,24 +1,58 @@
 <template>
     <div class="account">
-        <div class="container">
+        <div class="container" >
             <div class="row">
                 <div class="col-md-6 offset-md-3">
-                    <div class="block text-center">
-                        <h2 class="text-center">Login</h2>
-                        <form>
-                            <div class="mb-3">
-                                <input type="email" class="form-control" id="userNameInput" v-model="form.user_email">
-                            </div>
-                            <div class="mb-3">
-                                <input type="password" class="form-control" id="passwordInput" v-model="form.user_password">
-                            </div>
-                            <div class="mb-3">
-                                <button type="button" class="btn btn-dark text-center" @click="login">登录</button>
-<!--                                <button type="button" class="btn btn-secondary" @click="register">注册</button>-->
-                            </div>
-                        </form>
-                        <p class="mt-20">New in this site ?<a @click="register"> Create New Account</a></p>
+                  <div class="block">
+                    <div class="row justify-content-center">
+
+                        <el-image :src="src" style="width: 150px;height: 100px">
+                        </el-image>
+                      <div class="text-center">
+                        <h2>宝石识别与设计系统</h2>
+                      </div>
+
                     </div>
+                    <div class="block text-center">
+                      <form>
+                        <div class="mb-3">
+                          <input type="email" class="form-control" id="userNameInput" v-model="form.user_email" placeholder="邮箱">
+                        </div>
+                        <div class="mb-3">
+                          <input type="password" class="form-control" id="passwordInput" v-model="form.user_password" placeholder="密码">
+                        </div>
+                        <div class="mb-3">
+                          <button type="button" class="btn btn-dark justify-content-center" @click="login">登录</button>
+                          <!--                                <button type="button" class="btn btn-secondary" @click="register">注册</button>-->
+                        </div>
+                      </form>
+                      <p class="mt-20">还没账号 ?<a @click="register"> 注册</a></p>
+                    </div>
+
+                  </div>
+<!--                    <div class="block text-center">-->
+<!--                        <h2 class="text-center">登录</h2>-->
+<!--                      <div class="demo-image__placeholder">-->
+<!--                        <div class="block">-->
+<!--                          <span class="demonstration"> <h2 class="text-center">登录</h2></span>-->
+<!--                          <el-image :src="src">-->
+<!--                          </el-image>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                        <form>-->
+<!--                            <div class="mb-3">-->
+<!--                                <input type="email" class="form-control" id="userNameInput" v-model="form.user_email" placeholder="邮箱">-->
+<!--                            </div>-->
+<!--                            <div class="mb-3">-->
+<!--                                <input type="password" class="form-control" id="passwordInput" v-model="form.user_password" placeholder="密码">-->
+<!--                            </div>-->
+<!--                            <div class="mb-3">-->
+<!--                                <button type="button" class="btn btn-dark text-center" @click="login">登录</button>-->
+<!--&lt;!&ndash;                                <button type="button" class="btn btn-secondary" @click="register">注册</button>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                        <p class="mt-20">还没账号 ?<a @click="register"> 注册</a></p>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
@@ -33,6 +67,11 @@ import { ElMessage } from 'element-plus'
 import {ref} from 'vue';
 
 export default {
+  data() {
+    return {
+      src: 'http://127.0.0.1:9200/IMG/Gem_img/background1.png'
+    }
+  },
   name: 'LoginView',
   setup() {
     const form = ref({

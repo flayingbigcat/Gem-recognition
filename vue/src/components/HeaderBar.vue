@@ -22,7 +22,7 @@ export default {
             // 发送产品名称到后端
             event.preventDefault();
             console.log('input:',this.productName)
-            axios.post('http://8.134.18.17:8081/searchShop', { productName: this.productName })
+            axios.post('http://127.0.0.1:9200/searchShop', { productName: this.productName })
                 .then(response => {
                     console.log('response:',response.data)
                     // 如果后端返回不为空，执行页面跳转操作
@@ -49,7 +49,7 @@ export default {
 <div>
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-            <router-link class="navbar-brand" to="/Index">Navbar</router-link>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -59,7 +59,7 @@ export default {
                         <router-link class="nav-link active" aria-current="page" to="/Index">首页</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link active" to="/ShopPage">宝石</router-link>
+                        <router-link class="nav-link active" to="/ShopPage">宝石商城</router-link>
                     </li>
                     <li class="nav-item">
                       <router-link class="nav-link active" to="/ProductPump">AI创作</router-link>
@@ -68,7 +68,7 @@ export default {
                         <router-link class="nav-link active" to="/FeedbackPage">宝石识别</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link active" to="/">关于</router-link>
+                        <router-link class="nav-link active" to="/TransStyle">风格转换</router-link>
                     </li>
                 </ul>
                 <ul class="nav justify-content-end">
@@ -89,7 +89,7 @@ export default {
                             <li><router-link class="dropdown-item" to="/OrderPage">订单</router-link></li>
                             <li><router-link class="dropdown-item" to="/UserPage">用户</router-link></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><router-link class="dropdown-item" to="/">了解更多</router-link></li>
+                            <li><router-link class="dropdown-item" to="/TransStyle">了解更多</router-link></li>
                         </ul>
                     </li>
                 </ul>

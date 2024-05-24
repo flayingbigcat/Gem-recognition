@@ -18,7 +18,7 @@
               <div v-for="(image, index) in images" :key="index" :class="{ 'carousel-item': true, 'active': index === 0 }" data-bs-interval="3000">
                 <img :src="'data:image;base64,' + image" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-block">
-                  <h5 class="fs-2">{{ titles[index % 3] }}</h5> <!-- 使用数组的索引，确保在3个标题中循环 -->
+                  <h5 style="font-size: 55px">{{ titles[index % 3] }}</h5> <!-- 使用数组的索引，确保在3个标题中循环 -->
                 </div>
               </div>
             </div>
@@ -73,53 +73,11 @@
         </div>
       </div>
     </div>
-<!--    <div class="mid">-->
-<!--        <div class="container">-->
-<!--            <div class="row">-->
-<!--                <div class="col-md-12">-->
-<!--                    <div class="title text-center">-->
-<!--                        <h2>Product Category</h2>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--              <div class="col-md-6 ">-->
-<!--                <div class="category-box ">-->
-<!--                  <router-link to="#">-->
-<!--                    <img :src="'data:image;base64,' + images_product[9]" alt="" />-->
-<!--                    <div class="content">-->
-<!--                      <h3>Formula One</h3>-->
-<!--                      <p>Super Faster and Super Power</p>-->
-<!--                    </div>-->
-<!--                  </router-link>-->
-<!--                </div>-->
-<!--                <div class="category-box w-75 " style="margin-left: auto;">-->
-<!--                  <router-link to="#">-->
-<!--                    <img :src="'data:image;base64,' + images_product[10]" alt="" />-->
-<!--                    <div class="content">-->
-<!--                      <h3>Lamborghini Aventador</h3>-->
-<!--                      <p>Get Wide Range Selection</p>-->
-<!--                    </div>-->
-<!--                  </router-link>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-md-6 d-flex align-items-center">-->
-<!--                <div class="category-box category-box-2 w-75">-->
-<!--                  <router-link to="#">-->
-<!--                    <img :src="'data:image;base64,' + images_product[11]" alt="" />-->
-<!--                    <div class="content">-->
-<!--                      <h3>Lamborghini_Aventador</h3>-->
-<!--                      <p>Special Design Comes First</p>-->
-<!--                    </div>-->
-<!--                  </router-link>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
     <div class="product">
         <div class="container">
             <div class="row">
                 <div class="title text-center">
-                    <h2>Trendy Products</h2>
+                    <h2>精美宝石</h2>
                 </div>
             </div>
           <div class="row">
@@ -141,49 +99,23 @@
           </div>
         </div>
     </div>
-    <div class="call-to-action bg-gray section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="title">
-                        <h2>SUBSCRIBE TO NEWSLETTER</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, <br> facilis numquam impedit ut sequi. Minus facilis vitae excepturi sit laboriosam.</p>
-                    </div>
-                    <div class="input-group input-group-lg mb-3 w-50 m-auto">
-                        <input type="text" class="form-control" placeholder="Enter Your Email Address" aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <button class="btn btn-dark" type="button">Subscribe Now!</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="instagram-feed">
-        <div class="container">
-            <div class="row">
-                <div class="title">
-                    <h2>View us on instagram</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer-bar></footer-bar>
+
   <div class="hello">
   </div>
 </template>
 
 <script>
 import headerBar from "@/components/HeaderBar.vue";
-import FooterBar from "@/components/FooterPage.vue";
+
 import axios from "axios";
 export default {
   name: 'HelloWorld',
     components: {
-        FooterBar,
         headerBar, // 注册导航条组件
     },
     data() {
         return {
-          titles:["宝石设计之美：探索无限可能", "宝石设计之旅：探索创意边界", "璀璨之路：宝石设计之美"],
+          titles:["宝石设计之美 探索无限", "宝石设计之旅 探索创意", "宝石设计之美 璀璨之路"],
           images: [], // 存储从后端接收到的图片数据
           images_product:[],
           carouselIndicators: [], // 存储轮播指示器数据

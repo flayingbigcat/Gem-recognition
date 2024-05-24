@@ -4,23 +4,23 @@
             <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <div class="block text-center">
-                        <h2 class="text-center">SIGN</h2>
+                        <h2 class="text-center">注册</h2>
                         <form>
                             <div class="mb-3">
-                                <input type="email" class="form-control" id="userNameInput" v-model="form.user_name" placeholder="NAME">
+                                <input type="email" class="form-control" id="userNameInput" v-model="form.user_name" placeholder="用户名">
                             </div>
                             <div class="mb-3">
-                                <input type="email" class="form-control" id="userEmailInput" v-model="form.user_email" placeholder="EMAIL">
+                                <input type="email" class="form-control" id="userEmailInput" v-model="form.user_email" placeholder="邮箱">
                             </div>
                             <div class="mb-3">
-                                <input type="password" class="form-control" id="passwordInput" v-model="form.user_password" placeholder="PASSWORD">
+                                <input type="password" class="form-control" id="passwordInput" v-model="form.user_password" placeholder="P密码">
                             </div>
                             <div class="mb-3">
-                                <button type="button" class="btn btn-dark text-center" @click="register">Sign</button>
+                                <button type="button" class="btn btn-dark text-center" @click="register">注册</button>
                                 <!--                                <button type="button" class="btn btn-secondary" @click="register">注册</button>-->
                             </div>
                         </form>
-                        <p class="mt-20">Already hava an account ?<router-link to="/login"> Login</router-link></p>
+                        <p class="mt-20">已经有账号了 ?<router-link to="/login"> 登录</router-link></p>
                     </div>
                 </div>
             </div>
