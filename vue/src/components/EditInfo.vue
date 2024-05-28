@@ -23,19 +23,14 @@
                 <div class="pull-left">
                     <img class="media-object user-img" :src="user_datas[7]" alt="Image">
                 </div>
-<!--                <div class="dropdown mt-1">-->
-<!--                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Picture</button>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                        <li><a class="dropdown-item" href="#">Action</a></li>-->
-<!--                        <li><a class="dropdown-item" href="#">Another action</a></li>-->
-<!--                        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-<!--                    </ul>-->
-<!--                </div>-->
                 <div class="media-body">
                     <h2 class="media-heading">用户名</h2>
                     <input class="form-control media-heading" v-model="user_datas[1]" id="userNameInput" placeholder="User Name">
                     <p>个性签名</p>
-                    <input class="form-control" v-model="user_datas[4]" id="userEmailInput" placeholder="Description">
+<!--                    <input class="form-control" v-model="user_datas[6]" id="userEmailInput" placeholder="Description">-->
+                  <div class="form-floating">
+                    <textarea class="form-control" v-model="user_datas[6]" id="floatingTextarea2" style="height: 100px"></textarea>
+                  </div>
                 </div>
             </div>
             <form class="row g-3 mt-1">
@@ -54,7 +49,7 @@
                 <div class="col-md-12">
                     <label for="inputCity" class="form-label">地址</label>
                     <div class="col-md-6">
-                        <input class="form-control" v-model="user_datas[6]" id="userAddressInput" placeholder="Address">
+                        <input class="form-control" v-model="user_datas[4]" id="userAddressInput" placeholder="Address">
                     </div>
                 </div>
             </form>
@@ -96,10 +91,10 @@ export default {
                 user_id: this.user_id, // 确保这是有效的用户标识符
                 user_name: this.user_datas[1],
                 user_email: this.user_datas[2],
-                user_address: this.user_datas[6],
+                user_address: this.user_datas[4],
                 user_phone: this.user_datas[3],
                 user_sex: this.user_datas[5],
-                user_description: this.user_datas[4],
+                user_description: this.user_datas[6],
                 user_imageSrc: this.user_datas[7],
             };
             console.log("USER:",user)

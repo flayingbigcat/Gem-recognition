@@ -29,7 +29,7 @@
                 </div>
                 <div class="media-body">
                     <h2 class="media-heading">{{ user[1] }}</h2>
-                    <p>{{user[4]}}</p>
+                    <p>{{user[6]}}</p>
                 </div>
             </div>
             <form class="row g-3">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-md-12">
                     <label for="inputCity" class="form-label">地址</label>
-                    <p>{{7}}</p>
+                    <p>{{user[4]}}</p>
                 </div>
             </form>
         </div>
@@ -65,6 +65,8 @@ export default{
     components: { HeaderBar},
     data() {
         return {
+          dialogImageUrl: '',
+          dialogVisible: false,
             // 从localStorage获取数据并初始化data属性
             user_id:localStorage.getItem('user_id'),
             user_imageSrc: 'user_8.jpg',
@@ -73,6 +75,13 @@ export default{
         };
     },
     methods:{
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+      },
         async getUserMeg(){
             // const user = {
             const user_id = this.user_id; // 确保这是有效的用户标识符

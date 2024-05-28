@@ -12,6 +12,8 @@ import ProductPump from '../components/ProductPump.vue'
 import PumpSingle from "@/components/PumpSingle.vue";
 import ProductSingle from "@/components/ProductSingle.vue";
 import TransStyle from "@/components/TransStyle.vue";
+import AiCreateImage from "@/components/AiCreateImage.vue";
+import UploadProduct from "@/components/UploadProduct.vue";
 //
 // // 创建路由实例
 // const router = createRouter({
@@ -84,6 +86,11 @@ const routes = [
             refresh: true // 添加此标记以强制重新加载页面
         }
     },
+    {
+        path: '/AiCreateImage',
+        component: AiCreateImage,
+    },
+    {path: '/UploadProduct',component: UploadProduct,}
 
 ]
 

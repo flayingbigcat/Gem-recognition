@@ -89,9 +89,6 @@ export default {
         return Math.ceil(this.products.length / this.pageSize);
       },
     },
-  mounted() {
-      this.gain_gam();
-  },
   methods: {
         // 上一页按钮点击事件
         prevPage() {
@@ -139,18 +136,6 @@ export default {
                     console.error("There was an error adding the item to the cart:", error);
                 });
         },
-      gain_gam(){
-        axios.get('http://127.0.0.1:9200/uploadimg/GEM').then((res)=>{
-          console.log(res)
-          this.Gem_pictures = res.data;
-          // this.$message.success('图片获取成功');
-          // localStorage.setItem('Gem_pictures', JSON.stringify(res.data.data));
-          console.log('图片获取成功');
-        }).catch(()=>{
-          // this.$message.error('图片获取失败');
-          console.log('图片获取失败');
-        })
-      },
     },
 };
 </script>

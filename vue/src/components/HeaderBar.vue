@@ -87,6 +87,7 @@ export default {
                         <ul class="dropdown-menu">
                             <li><router-link class="dropdown-item" to="/CartPage">收藏</router-link></li>
                             <li><router-link class="dropdown-item" to="/OrderPage">订单</router-link></li>
+                            <li><router-link class="dropdown-item" to="/UploadProduct">发布商品</router-link></li>
                             <li><router-link class="dropdown-item" to="/UserPage">用户</router-link></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><router-link class="dropdown-item" to="/TransStyle">了解更多</router-link></li>

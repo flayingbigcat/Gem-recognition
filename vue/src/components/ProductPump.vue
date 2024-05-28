@@ -104,7 +104,6 @@
 import HeaderBar from "@/components/HeaderBar.vue";
 import { ElLoading } from 'element-plus';
 import axios from "axios";
-import FooterBar from "@/components/FooterPage.vue";
 export default {
   components: { HeaderBar },
 

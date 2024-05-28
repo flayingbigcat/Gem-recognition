@@ -11,7 +11,8 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/">首页</router-link></li>
-                                <li class="breadcrumb-item active" aria-current="page">商城</li>
+                                <li class="breadcrumb-item active" aria-current="page">宝石商城</li>
+                                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/AiCreateImage">宝石创作</router-link></li>
                             </ol>
                         </nav>
                     </div>
