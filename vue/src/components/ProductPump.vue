@@ -95,6 +95,9 @@
               </div>
             </div>
           </div>
+          <div>
+            <router-link class="btn btn-primary" to="/UploadProduct">发布设计图</router-link>
+          </div>
         </div>
       </div>
     </div>

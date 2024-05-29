@@ -20,13 +20,13 @@ export default {
           <div class="content">
             <h1 class="page-name">商城</h1>
             <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/">首页</router-link></li>
-                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/ShopPage">宝石商城</router-link></li>
-                <li class="breadcrumb-item active" aria-current="page">宝石创作</li>
-                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/UploadProduct">发布商品</router-link></li>
-                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/OrderPage">我的发布</router-link></li>
-                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/CartPage">我的收藏</router-link></li>
+              <ol class="breadcrumb" >
+                <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/">首页</router-link></li>
+                <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/ShopPage">宝石商城</router-link></li>
+                <li class="breadcrumb-item active" aria-current="page" style="font-size: 20px">宝石创作</li>
+                <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/UploadProduct">发布商品</router-link></li>
+                <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/OrderPage">我的发布</router-link></li>
+                <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/CartPage">我的收藏</router-link></li>
               </ol>
             </nav>
           </div>

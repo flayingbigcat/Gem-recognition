@@ -10,11 +10,11 @@
             <h1 class="page-name">欢迎</h1>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/">首页</router-link></li>
-                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/ShopPage">宝石商城</router-link></li>
-                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/UploadProduct">发布商品</router-link></li>
-                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/OrderPage">我的发布</router-link></li>
-                <li class="breadcrumb-item active" aria-current="page">我的收藏</li>
+                <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/">首页</router-link></li>
+                <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/ShopPage">宝石商城</router-link></li>
+                <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/UploadProduct">发布商品</router-link></li>
+                <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/OrderPage">我的发布</router-link></li>
+                <li class="breadcrumb-item active" aria-current="page" style="font-size: 20px">我的收藏</li>
               </ol>
             </nav>
           </div>

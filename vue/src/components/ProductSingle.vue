@@ -8,8 +8,8 @@
                 <div class="col-md-6">
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><router-link to="/index" style="text-decoration: none;">首页</router-link></li>
-                            <li class="breadcrumb-item active" aria-current="page">商城</li>
+                            <li class="breadcrumb-item" style="font-size: 20px"><router-link to="/index" style="text-decoration: none;">首页</router-link></li>
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size: 20px">商城</li>
                         </ol>
                     </nav>
                 </div>
@@ -45,10 +45,10 @@
                 </div>
                 <div class="col-md-7">
                     <div class="single-product-details">
-                        <h2>{{product[1]}}</h2>
-                        <p class="product-price">{{product[2]}}</p>
+                        <h2 style="font-size: 35px">{{product[1]}}</h2>
+                        <p class="product-price" style="font-size: 20px">{{product[2]}}</p>
 
-                        <p class="product-description mt-20">{{product[4]}}</p>
+                        <p class="product-description mt-20" style="font-size: 20px">{{product[4]}}</p>
                         <div class="color-swatches">
                             <span>颜色:</span>
                             <ul>
@@ -63,15 +63,15 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="product-size">
-                            <span>尺寸:</span>
+                        <div class="product-size" style="font-size: 20px">
+                            <span >尺寸:</span>
                             <select class="form-control">
                                 <option>99</option>
                                 <option>98</option>
                                 <option>85</option>
                             </select>
                         </div>
-                        <div class="product-quantity">
+                        <div class="product-quantity" style="font-size: 20px">
                             <span>数量:</span>
                             <div class="quantity-modifier">
                                 <button @click="changeQuantity(-1)">-</button>

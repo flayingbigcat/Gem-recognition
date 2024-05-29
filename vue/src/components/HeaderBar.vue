@@ -54,7 +54,7 @@ export default {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: 20px">
                     <li class="nav-item">
                         <router-link class="nav-link active" aria-current="page" to="/Index">首页</router-link>
                     </li>
@@ -71,7 +71,7 @@ export default {
                         <router-link class="nav-link active" to="/TransStyle">风格转换</router-link>
                     </li>
                 </ul>
-                <ul class="nav justify-content-end">
+                <ul class="nav justify-content-end" style="font-size: 25px">
                     <!-- 使用v-if和v-else来根据user_id的值显示不同的链接 -->
                     <li class="nav-item">
                         <router-link v-if="user_id" class="nav-link active" @click="logout" to="/index">退出登录</router-link>
@@ -94,9 +94,9 @@ export default {
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input v-model="productName" class="form-control me-3" type="search" placeholder="搜索" aria-label="Search">
-                    <button @click="searchProduct" class="btn btn-outline-success" type="button">搜索</button>
+                <form class="d-flex" role="search" >
+                    <input v-model="productName" class="form-control me-3" type="search" placeholder="搜索"  style="font-size: 20px" aria-label="Search">
+                    <button @click="searchProduct" class="btn btn-outline-success" type="button" style="font-size: 20px">搜索</button>
                 </form>
             </div>
         </div>
