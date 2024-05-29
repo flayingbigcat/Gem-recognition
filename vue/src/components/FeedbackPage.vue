@@ -33,8 +33,13 @@
             <el-collapse-item :title="item[4]" :name="item.name">
               <div>
                 <div class="demo-image__placeholder">
+                  <div class="end-0">
+                    <el-button @click="deleteRecord(item[0], item[4], item[2])" type="info">删除记录</el-button>
+                  </div>
                   <div class="block">
-                    <span class="demonstration"><p>宝石名称: {{ item[3] }}</p></span>
+                    <span class="demonstration">
+                      <p>宝石名称: {{ item[3] }}</p>
+                    </span>
                     <el-image :src="item[2]">
                     </el-image>
                   </div>
@@ -76,6 +81,28 @@ export default {
     this.fetchImages();
   },
   methods: {
+    deleteRecord(userId, createTime, imgUrl) {
+      axios.post('http://127.0.0.1:9200/delete_rec_record', {
+        user_id: userId,
+        create_img_time: createTime,
+        img_url: imgUrl  // 将文件路径传递给后端
+      })
+          .then(response => {
+            if (response.data.success) {
+              // 从allData中删除记录
+              this.allData = this.allData.filter(item => !(item[0] === userId && item[4] === createTime));
+              this.$message.success('记录删除成功');
+
+              // 删除文件
+            } else {
+              this.$message.error('删除失败: ' + (response.data.error || '未知错误'));
+            }
+          })
+          .catch(error => {
+            console.error('Error deleting record:', error);
+            this.$message.error('删除失败: ' + (error.response?.data?.error || '服务器错误'));
+          });
+    },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
       this.uploading = true; // 开始上传时显示加载动画

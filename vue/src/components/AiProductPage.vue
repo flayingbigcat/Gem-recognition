@@ -46,7 +46,7 @@
 <script>
 import axios from "axios";
 export default {
-    name: 'productList',
+    name: 'AiProductList',
     data() {
         return {
           Gem_pictures:[],
@@ -64,7 +64,7 @@ export default {
     },
     created() {
         // Make an HTTP request to the backend API endpoint
-        axios.get('http://127.0.0.1:9200/get_shops?query_type=all')
+        axios.get('http://127.0.0.1:9200/get_aishops?query_type=all')
             .then(response => {
                 // Update the products array with the data received from the backend
                 console.log(response.data);
@@ -106,36 +106,6 @@ export default {
         gotoPage(page) {
             this.currentPage = page;
         },
-        // addToCart(product) {
-        //     // 获取user_id
-        //     const userId = localStorage.getItem('user_id');
-        //
-        //     // 检查user_id是否为空
-        //     if (!userId) {
-        //         // user_id为空，跳转到登录页面
-        //         this.$router.push('/login');
-        //         return; // 退出方法执行
-        //     }
-        //     // 构建要发送到后端的商品信息对象
-        //     const shopCartItem = {
-        //         user_id: localStorage.getItem('user_id'),// 假设用户ID存储在localStorage
-        //         product_id: product.product_id,
-        //         product_name: product.product_name, // 修改这里
-        //         product_price: product.product_price // 和这里
-        //     };
-        //     console.log("Adding to cart:", shopCartItem);
-        //     // 发送POST请求到后端
-        //     axios.post('http://8.134.18.17:8081/addShopCart', shopCartItem)
-        //         .then(response => {
-        //             // 处理响应
-        //             console.log("Item added to cart successfully", response);
-        //             alert("Item added to cart successfully");
-        //         })
-        //         .catch(error => {
-        //             // 处理错误
-        //             console.error("There was an error adding the item to the cart:", error);
-        //         });
-        // },
     addToCart(productId, productName, productPrice, product_imageSrc) {
       // 假设 user_id 存储在 Vue 实例的某个属性中，比如 this.userId
       const user_id = localStorage.getItem('user_id');
@@ -146,7 +116,7 @@ export default {
         product_name: productName,
         product_price: productPrice,
         user_id: user_id,
-        product_imageSrc: product_imageSrc,
+        product_imageSrc: product_imageSrc
       })
           .then(response => {
             // 处理后端返回的响应

@@ -2,55 +2,53 @@
     <div>
         <header-bar></header-bar>
     </div>
-    <div class="page-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="content">
-                        <h1 class="page-name">Cart</h1>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <router-link style="text-decoration: none" to="/">Home</router-link>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">Cart</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="page-header">
     <div class="container">
-        <div class="dashboard-Cart">
-            <div class="media-body">
-                <h2 class="media-heading">{{ user_name }}</h2>
-            </div>
-            <table class="table">
-                <thead class="table-group-divider">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Product</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(item, index) in dataCollection" :key="item.id">
-                    <td>{{ item.product_id }}</td>
-                    <td>{{ item.product_name }}</td>
-                    <td>{{ item.product_price }}</td>
-                    <td>
-                        <a class="no-underline-black" @click="deleteRow(index, item.product_id)">Remove</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="d-md-flex justify-content-md-end">
-                <button class="btn btn-dark" type="button">Checkout</button>
-            </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="content">
+            <h1 class="page-name">欢迎</h1>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/">首页</router-link></li>
+                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/ShopPage">宝石商城</router-link></li>
+                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/UploadProduct">发布商品</router-link></li>
+                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/OrderPage">我的发布</router-link></li>
+                <li class="breadcrumb-item active" aria-current="page">我的收藏</li>
+              </ol>
+            </nav>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+  <div class="container">
+    <div class="dashboard-Cart">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">商品名称</th>
+          <th scope="col">收藏时间</th>
+          <th scope="col">商品价格</th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        <tr v-for="(item, index) in tableData" :key="index">
+          <th scope="row"><el-image
+              style="width: 100px; height: 100px"
+              :src="item[4]"
+          ></el-image></th>
+          <td>{{ item[1] }}</td>
+          <td>{{ item[3] }}</td>
+          <td>{{ item[2] }}</td>
+          <td><router-link :to="`/ProductSingle/${item[0]}`" class="btn btn-dark me-md-2">查看</router-link>
+            <button class="btn btn-dark" @click="deleteRow(index, item[0])">移除</button></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
     <footer-bar></footer-bar>
 </template>
 <script>
@@ -62,57 +60,43 @@ export default {
     components: { FooterBar, HeaderBar },
     data() {
         return {
-            user_name:localStorage.getItem('user_name'),
-            dataCollection: [
-                {
-                    product_id:'',
-                    product_name:'',
-                    product_price:''
-                }
-            ]
+          tableData: [],
+          fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
+          url:'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
         };
     },
     mounted() {
-        // 获取存储在localStorage的user_id
-        const userId = localStorage.getItem('user_id');
-        if (!userId) {
-            // 如果userId为空，执行路由导航到登录页面
-            this.$router.push("/login");
-        }
-        console.log(userId);
-        // 在组件加载后发送HTTP请求
-        axios.post('http://8.134.18.17:8081/selectProduct', { user_id: userId }) // 发送POST请求，传递一个对象作为请求体
-            .then(response => {
-                console.log(response.data);
-                this.dataCollection = response.data; // 将后端数据填充到dataCollection数组中
-                // if (response.data.length > 0) {
-                //     this.product_id = response.data[0].product_id;
-                //     localStorage.setItem('product_id', this.product_id);
-                // }
-                // console.log( localStorage.getItem('product_id'))
-                // 打印product_id数据
-            })
-            .catch(error => {
-                console.error('User ID is not available', error);
-            });
+      this.getProducts(); // 在组件挂载完成后立即获取产品信息
     },
 
     methods: {
-        // 删除行的方法
-        deleteRow(index, productId) {
-            // 从前端数据中删除行
-            this.dataCollection.splice(index, 1);
-            const deletedProductId = productId;
-            // 发送删除请求到后端接口
-            axios.post(`http://8.134.18.17:8081/deleteProduct?id=${productId}`)
-                .then(() => {
-                    // 处理后端删除成功的响应
-                    console.log('Data deleted successfully from the backend Deleted product',deletedProductId);
-                })
-                .catch(error => {
-                    console.error('Error deleting data from the backend:', error);
-                });
+      // 获取产品信息的方法
+      async getProducts() {
+        try {
+          const user_id = localStorage.getItem('user_id'); // 从localStorage获取用户ID，您也可以从其他地方获取
+          const response = await axios.get(`http://127.0.0.1:9200/getcartProducts?user_id=${user_id}`);
+          this.tableData = response.data; // 将获取到的产品信息填充到tableData数组中
+          console.log(response)
+          console.log(this.tableData)
+        } catch (error) {
+          console.error('Error getting products:', error);
+          alert('您还未收藏有商品哦！');
         }
+      },
+      async deleteRow(index, product_id) {
+        try {
+          const response = await axios.delete(`http://127.0.0.1:9200/deletecartProduct`, {
+            params: { product_id: product_id }
+          });
+          if (response.status === 200) {
+            this.tableData.splice(index, 1); // 从前端表格中移除这一行
+            alert('Product deleted successfully');
+          }
+        } catch (error) {
+          console.error('Error deleting product:', error);
+          alert('Failed to delete product.');
+        }
+      }
     }
 };
 

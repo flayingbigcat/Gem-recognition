@@ -123,12 +123,19 @@ export default {
         },
       loadProductData() {
         if (this.localProductId) {
+          let url = '';
+          if (this.localProductId.startsWith('gem_')) {
+            // 如果 localProductId 以 "gem_" 开头，使用不同的 URL
+            url = 'http://127.0.0.1:9200/get_aishops?query_type=by_id&product_id=' + this.localProductId;
+          } else {
+            url = 'http://127.0.0.1:9200/get_shops?query_type=by_id&product_id=' + this.localProductId;
+          }
+
           // 发送GET请求，将product_id作为查询参数传递
-          axios.get('http://127.0.0.1:9200/get_shops?query_type=by_id&product_id=' + this.localProductId)
+          axios.get(url)
               .then(response => {
                 // 请求成功，处理返回的数据
                 console.log(response.data)
-
                 this.product = response.data[0]
                 console.log(this.product)
               })

@@ -1,10 +1,10 @@
 <script>
 import HeaderBar from "@/components/HeaderBar.vue";
-import ProductList from "@/components/ProductPage.vue";
+import AiProductList from "@/components/AiProductPage.vue";
 
 export default {
   name: "AiCreateImage",
-  components: {ProductList, HeaderBar}
+  components: {AiProductList, HeaderBar}
 }
 </script>
 
@@ -24,6 +24,9 @@ export default {
                 <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/">首页</router-link></li>
                 <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/ShopPage">宝石商城</router-link></li>
                 <li class="breadcrumb-item active" aria-current="page">宝石创作</li>
+                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/UploadProduct">发布商品</router-link></li>
+                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/OrderPage">我的发布</router-link></li>
+                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/CartPage">我的收藏</router-link></li>
               </ol>
             </nav>
           </div>
@@ -31,7 +34,7 @@ export default {
       </div>
     </div>
   </div>
-  <product-list></product-list>
+  <AiProductList></AiProductList>
 </div>
 </template>
 

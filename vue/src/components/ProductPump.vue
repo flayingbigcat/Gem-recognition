@@ -19,6 +19,7 @@
                 <p>迭代次数: {{ item[5] }}</p>
                 <p>宽度: {{ item[6] }}</p>
                 <p>高度: {{ item[7] }}</p>
+                <el-button @click="deleteRecord(item[0], item[1], item[2])" type="info">删除记录</el-button>
               </div>
             </el-collapse-item>
           </template>
@@ -36,7 +37,7 @@
           <label class="form-label">提示词</label>
           <textarea class="form-control" id="prompt" v-model="prompt" rows="2" placeholder="请输入提示词"></textarea>
           <el-row class="p-2">
-            <el-button round @click="addToPrompt('戒指')">戒指</el-button>
+            <el-button round @click="addToPrompt('ring')">戒指</el-button>
             <el-button type="primary" round @click="addToPrompt('bracelet')">手链</el-button>
             <el-button type="success" round @click="addToPrompt('bangle')">手镯</el-button>
             <el-button type="info" round @click="addToPrompt('pendant')">吊坠</el-button>
@@ -163,6 +164,29 @@ export default {
     },
     closeFullScreen2() {
       ElLoading.service().close();
+    },
+    deleteRecord(userId, createTime, imgUrl) {
+      axios.post('http://127.0.0.1:9200/delete_record', {
+        user_id: userId,
+        create_img_time: createTime,
+        img_url: imgUrl  // 将文件路径传递给后端
+      })
+          .then(response => {
+            if (response.data.success) {
+              // 从allData中删除记录
+              this.allData = this.allData.filter(item => !(item[0] === userId && item[1] === createTime));
+              this.$message.success('记录删除成功');
+
+              // 删除文件
+              // this.deleteFile(imgUrl);
+            } else {
+              this.$message.error('删除失败: ' + (response.data.error || '未知错误'));
+            }
+          })
+          .catch(error => {
+            console.error('Error deleting record:', error);
+            this.$message.error('删除失败: ' + (error.response?.data?.error || '服务器错误'));
+          });
     },
     async generateImages() {
       this.uploading = true; // 开始上传时显示加载动画

@@ -7,6 +7,7 @@ export default {
   components: {HeaderBar},
   data() {
     return {
+      radio1: '',
       // 从localStorage获取数据并初始化data属性
       product_datas: [],
       user_id:localStorage.getItem('user_id'),
@@ -32,8 +33,16 @@ export default {
     },
     async saveProduct() {
       try {
+        if (this.radio1 === '') {
+          alert('请选择上传类型。');
+          return;
+        }
         if (this.selectedFiles.length !== 3) {
           alert('请上传3张图片。');
+          return;
+        }
+        if (this.product_datas[1] === '') {
+          alert('请输入商品名称。');
           return;
         }
         // 使用FormData对象
@@ -51,7 +60,12 @@ export default {
           formData.append(`file${index}`, file);
         });
 
-        const response = await axios.post('http://127.0.0.1:9200/uploadProduct', formData, {
+        // 根据选择设置上传 URL
+        const uploadUrl = this.radio1 === '宝石发布'
+            ? 'http://127.0.0.1:9200/uploadProduct'
+            : 'http://127.0.0.1:9200/uploadAIProduct';
+
+        const response = await axios.post(uploadUrl, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -69,10 +83,36 @@ export default {
 
 <template>
   <header-bar></header-bar>
+  <div class="page-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-center">
+          <div class="content">
+            <h1 class="page-name">欢迎</h1>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/">首页</router-link></li>
+                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/ShopPage">宝石商城</router-link></li>
+                <li class="breadcrumb-item active" aria-current="page">发布商品</li>
+                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/OrderPage">我的发布</router-link></li>
+                <li class="breadcrumb-item"><router-link style="text-decoration: none" to="/CartPage">我的收藏</router-link></li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container d-flex justify-content-center">
     <div class="dashboard-wrapper">
       <div class="media">
         <div class="pull-left">
+          <div>
+            <el-radio-group v-model="radio1">
+              <el-radio-button label="宝石发布"></el-radio-button>
+              <el-radio-button label="宝石创作"></el-radio-button>
+            </el-radio-group>
+          </div>
           <el-upload
               list-type="picture-card"
               action="http://127.0.0.1:9200/upload_test"
