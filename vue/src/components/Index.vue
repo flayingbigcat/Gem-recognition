@@ -40,14 +40,14 @@
           </div>
         </div>
         <div class="col-md-5" style="padding: 20px;">
-          <h3 style="font-size: 45px">烈焰石</h3>
-          <p style="font-size: 25px">烈焰石是一种稀有的矿物，其独特之处在于其深红色的晶体表面覆盖着一层闪闪发光的白色晶簇。这种矿石只在地球深处的火山岩层中发现，其形成过程被认为与火山喷发活动密切相关。</p>
+          <h3 style="font-size: 45px">坦桑石</h3>
+          <p style="font-size: 25px">坦桑石是一种来自坦桑尼亚的宝石，以其独特的鲜艳色彩和闪耀光泽而著称。其颜色丰富多样，包括蓝色、绿色、紫色等，常常呈现出丰富的色彩层次和斑斓的图案。坦桑石被视为心灵宝石，具有促进心灵成长、提升直觉和增强情感表达的功效。</p>
         </div>
       </div>
       <div class="row justify-content-center" style="padding: 20px">
         <div class="col-md-5 " style=" text-align: right">
-          <h3 style="font-size: 45px">翡墨石</h3>
-          <p style="font-size: 25px">翡墨石，一种令人惊叹的自然奇观，它将翠绿与漆黑融为一体。这种矿石稀世罕见，仅在地球深处的神秘矿脉中闪耀。其外观恰如森林中的密林，绿叶与黑影交错，散发出一种神秘的气息。</p>
+          <h3 style="font-size: 45px">石榴石</h3>
+          <p style="font-size: 25px">石榴石是一种迷人的宝石，其色彩丰富多变，包括红色、橙色、绿色和紫色等。它因形似石榴果籽而得名，散发出独特的光泽和色彩。石榴石被视为幸运之石，象征着热情、活力和成功。在古代，它被认为具有驱邪、保平安的作用。</p>
         </div>
         <div class="col-md-4">
           <div class="text-align: center;" >
@@ -62,8 +62,8 @@
           </div>
         </div>
         <div class="col-md-5" style="padding: 20px;">
-          <h3 style="font-size: 45px">瑪瑙石</h3>
-          <p style="font-size: 25px">琥珀晶是一种迷人而神秘的矿石，其色泽呈现出温暖的棕色，微微透明，仿佛蕴藏着岁月的记忆和大地的温情。这种独特的矿物宝石隐藏在地球深处的古老岩层中，常常伴随着古代生物的痕迹，成为了地质学和珠宝学的珍品。</p>
+          <h3 style="font-size: 45px">蓝宝石</h3>
+          <p style="font-size: 25px">蓝宝石是一种珍贵的宝石，以其深蓝色而闻名。它的色彩鲜艳，透出宝贵的光芒。蓝宝石是红宝石的同质异色体，由铝氧化物和铁氧化物的组合形成。除了蓝色，它也可能呈现其他颜色，如粉红色、黄色和绿色。蓝宝石象征着忠诚、智慧和希望，被视为幸运之石。</p>
         </div>
       </div>
     </div>
