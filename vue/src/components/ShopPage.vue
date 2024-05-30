@@ -11,8 +11,8 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                               <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/">首页</router-link></li>
-                              <li class="breadcrumb-item active" aria-current="page" style="font-size: 20px">宝石商城</li>
-                              <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/AiCreateImage">宝石创作</router-link></li>
+                              <li class="breadcrumb-item active" aria-current="page" style="font-size: 20px">原料商城</li>
+                              <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/AiCreateImage">首饰商城</router-link></li>
                               <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/UploadProduct">发布商品</router-link></li>
                               <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/OrderPage">我的发布</router-link></li>
                               <li class="breadcrumb-item" style="font-size: 20px"><router-link style="text-decoration: none" to="/CartPage">我的收藏</router-link></li>

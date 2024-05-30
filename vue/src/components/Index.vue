@@ -51,7 +51,7 @@
         </div>
         <div class="col-md-4">
           <div class="text-align: center;" >
-            <img :src="'data:image;base64,' + images_product[5]" alt="" class="w-75" style="margin: auto; display: block;"/>
+            <img :src="'data:image;base64,' + images_product[12]" alt="" class="w-75" style="margin: auto; display: block;"/>
           </div>
         </div>
       </div>

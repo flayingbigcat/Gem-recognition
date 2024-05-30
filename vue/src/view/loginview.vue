@@ -9,7 +9,7 @@
                         <el-image :src="src" style="width: 150px;height: 100px">
                         </el-image>
                       <div class="text-center">
-                        <h2>宝石识别与设计系统</h2>
+                        <h2>基于大模型的宝石识别与设计平台</h2>
                       </div>
 
                     </div>
@@ -69,7 +69,7 @@ import {ref} from 'vue';
 export default {
   data() {
     return {
-      src: 'http://127.0.0.1:9200/IMG/Gem_img/background1.png'
+      src: 'http://127.0.0.1:9200/IMG/Gem_img/background_11.jpg'
     }
   },
   name: 'LoginView',
